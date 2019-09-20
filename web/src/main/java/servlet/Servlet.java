@@ -1,4 +1,4 @@
-package Servlets;
+package servlet;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/*")
+@WebServlet("/first")
 public class Servlet  extends HttpServlet {
 
     @Override
@@ -20,7 +20,7 @@ public class Servlet  extends HttpServlet {
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
 
         requestDispatcher.forward(request,response);
-        //response.sendRedirect("/startpage.jsp");
+        //response.sendRedirect("/startpage");
 
     }
 

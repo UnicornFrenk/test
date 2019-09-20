@@ -1,4 +1,4 @@
-package filters;
+package filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -7,9 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/*")
+@WebFilter("/users")
 public class LoginFilter implements Filter {
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 
@@ -30,6 +30,7 @@ public class LoginFilter implements Filter {
     }
 
 
+    @Override
     public void destroy() {
 
     }

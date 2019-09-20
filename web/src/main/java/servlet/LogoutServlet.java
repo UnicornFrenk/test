@@ -1,4 +1,4 @@
-package Servlets;
+package servlet;
 
 
 import javax.servlet.ServletException;
@@ -13,8 +13,9 @@ import java.util.Map;
 @WebServlet("/login")
 public class LogoutServlet extends HttpServlet {
 
-    protected void goGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        request.getRequestDispatcher("/login.jsp").forward(request,response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
@@ -43,6 +44,6 @@ String password = request.getParameter("password");
 //        }
 
         request.setAttribute("message", messages);
-        request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request,response);
+        request.getRequestDispatcher("/login.jsp").forward(request,response);
     }
 }
