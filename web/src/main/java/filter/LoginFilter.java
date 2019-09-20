@@ -22,6 +22,9 @@ public class LoginFilter implements Filter {
         boolean loggedIn = session != null && session.getAttribute("user") != null;
         boolean loginRequest = request.getRequestURI().equals(loginURI);
 
+
+        
+
         if (loggedIn || loginRequest) {
             filterChain.doFilter(request, response);
         } else {
