@@ -1,52 +1,37 @@
 package Model;
 
 public class User {
-    private int id;
-    private String userName;
-    private String password;
-    private ROLE role;
+    private String name;
+    private String age;
+    private String sex;
 
-    public User(){}
-
-    public User(int id, String userName, String password, ROLE role) {
-        this.id = id;
-        this.userName = userName;
-        this.password = password;
-        this.role = role;
+    public User(String name, String age, String sex) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
     }
 
-    public int getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getAge() {
+        return age;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setAge(String age) {
+        this.age = age;
     }
 
-    public String getPassword() {
-        return password;
+    public String getSex() {
+        return sex;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public ROLE getRole() {
-        return role;
-    }
-
-    public void setRole(ROLE role) {
-        this.role = role;
-    }
-    public enum ROLE{
-        USER,ADMIN, UNKNOWN
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 }

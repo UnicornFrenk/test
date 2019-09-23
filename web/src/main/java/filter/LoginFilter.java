@@ -23,7 +23,7 @@ public class LoginFilter implements Filter {
         boolean loginRequest = request.getRequestURI().equals(loginURI);
 
 
-        
+
 
         if (loggedIn || loginRequest) {
             filterChain.doFilter(request, response);

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @WebServlet("/login")
-public class LogoutServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
