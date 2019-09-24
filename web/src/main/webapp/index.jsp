@@ -12,13 +12,13 @@
     <table>
         <tr>
             <td>
-                <form method="post" action="/login">
-                    <input type="button" required placeholder="submit" value="Войти">
+                <form method="post" action="${pageContext.request.contextPath}/login">
+                    <button type="submit" value="Войти">Войти</button>
                 </form>
             </td>
             <td>
-                <form method="post" action="/registration">
-                    <input type="button" required placeholder="submit" value="Регистрация">
+                <form method="post" action="${pageContext.request.contextPath}/registration">
+                    <button type="submit" value="Регистрация">Регистрация</button>
                 </form>
             </td>
         </tr>

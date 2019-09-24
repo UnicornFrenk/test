@@ -14,25 +14,25 @@ import java.util.Map;
 public class LoginServlet extends HttpServlet {
 
     @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        request.getRequestDispatcher("/login.jsp").forward(request,response);
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,IOException{
-String userName =request.getParameter("username");
-String password = request.getParameter("password");
-        Map<String,String> messages = new HashMap<String, String>();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userName = request.getParameter("username");
+        String password = request.getParameter("password");
+        Map<String, String> messages = new HashMap<String, String>();
 
-        if(userName == null||userName.isEmpty()){
-         messages.put("username","Please enter username");
+        if (userName == null || userName.isEmpty()) {
+            messages.put("username", "Please enter username");
         }
 
-        if (password==null||password.isEmpty()){
-            messages.put("password","Please input password");
+        if (password == null || password.isEmpty()) {
+            messages.put("password", "Please input password");
         }
 
 //        if (messages.isEmpty()){
-//            User user = userService.find (userName,password);
+//            User user = UserService.find (userName,password);
 //
 //            if(user!=null){
 //                request.getSession().setAttribute("user",user);
@@ -44,6 +44,6 @@ String password = request.getParameter("password");
 //        }
 
         request.setAttribute("message", messages);
-        request.getRequestDispatcher("/login.jsp").forward(request,response);
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 }

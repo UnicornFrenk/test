@@ -20,12 +20,12 @@ public class MainPageServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
 
         requestDispatcher.forward(request,response);
-        //response.sendRedirect("/startpage");
+//        response.sendRedirect("/users");
 
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
     }
 
