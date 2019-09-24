@@ -1,4 +1,4 @@
-package impl;
+package com.github;
 
 import Model.AuthUser;
 import Model.User;

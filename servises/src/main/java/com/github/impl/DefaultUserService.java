@@ -1,9 +1,10 @@
-package impl;
+package com.github.impl;
 
 import DAO.UserDAO;
 import DAO.impl.DefaultUserDao;
 import Model.AuthUser;
 import Model.User;
+import com.github.UserService;
 
 import java.util.List;
 
