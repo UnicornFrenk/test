@@ -36,5 +36,6 @@ public class DefaultUserDao implements UserDAO {
     public String save(User user){
         users.add(user);
         return user.getId();
+//        execute("insert into user values(" + user.getLogin())
     }
 }

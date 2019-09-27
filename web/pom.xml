@@ -18,6 +18,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>it.academy</groupId>
             <artifactId>smarty</artifactId>
             <version>1.0-SNAPSHOT</version>

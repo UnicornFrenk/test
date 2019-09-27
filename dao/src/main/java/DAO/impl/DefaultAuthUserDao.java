@@ -2,7 +2,6 @@ package DAO.impl;
 
 import DAO.AuthUserDao;
 import Model.AuthUser;
-import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 
 import java.util.HashMap;
 import java.util.Map;

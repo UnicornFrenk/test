@@ -34,4 +34,8 @@ public class User {
     public void setSex(String sex) {
         this.sex = sex;
     }
+
+    public String getId() {
+        return null; // todo
+    }
 }

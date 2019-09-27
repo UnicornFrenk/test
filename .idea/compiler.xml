@@ -12,9 +12,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="dao" target="7" />
-      <module name="Servises" target="6" />
-      <module name="smart" target="1.5" />
+      <module name="dao" target="1.8" />
+      <module name="Servises" target="1.8" />
+      <module name="smart" target="1.8" />
       <module name="webmodule" target="1.8" />
     </bytecodeTargetLevel>
   </component>

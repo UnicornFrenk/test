@@ -1,5 +1,7 @@
 package servlet;
 
+import impl.UserService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,14 @@ public class RegistrationServlet extends HttpServlet {
     }
 
     @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) {
+    public void doPost(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
+        String login = rq.getParameter("login");
+        rq.setAttribute("login", login);
+//        UserService.save(user);
+        rq.getRequestDispatcher("/user.jsp").forward(rq, rs);
+
+
+
+        // forwar jsp user
     }
 }
