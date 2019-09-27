@@ -20,7 +20,7 @@ public class MainPageServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(path);
 
         requestDispatcher.forward(request,response);
-        //response.sendRedirect("/startpage");
+//        response.sendRedirect("/users");
 
     }
 

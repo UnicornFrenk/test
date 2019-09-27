@@ -1,10 +1,11 @@
-package impl;
+package com.github.impl;
 
 import DAO.AuthUserDao;
 import DAO.impl.DefaultAuthUserDao;
 import Model.AuthUser;
+import com.github.SecurityService;
 
-public class DefaultSecurityService implements SecurityService{
+public class DefaultSecurityService implements SecurityService {
     private AuthUserDao authUserDao = DefaultAuthUserDao.getInstance();
 
     private static volatile SecurityService instance;

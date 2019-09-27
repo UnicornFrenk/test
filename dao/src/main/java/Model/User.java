@@ -1,11 +1,20 @@
 package Model;
 
 public class User {
+    private String id;
     private String name;
     private String age;
     private String sex;
 
-    public User(String name, String age, String sex) {
+    public User(String id, String name, String age, String sex) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
+    public User( String name, String age, String sex) {
+
         this.name = name;
         this.age = age;
         this.sex = sex;
@@ -36,6 +45,10 @@ public class User {
     }
 
     public String getId() {
-        return null; // todo
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
