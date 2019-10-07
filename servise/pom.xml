@@ -27,6 +27,6 @@
     <artifactId>users</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>servises</name>
+    <name>servise</name>
 
 </project>

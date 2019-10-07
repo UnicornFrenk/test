@@ -20,15 +20,19 @@
     </tr>
     <tr>
         <td>Повторите пароль:</td>
-        <td><input type="password" required placeholder="repeat" name="Repeat password"><br></td>
+        <td><input type="password" required placeholder="repeat" name="password2"><br></td>
     </tr>
     <tr>
         <td>Введи свое имя:</td>
-        <td><input type="text" required placeholder="name" name="Input your name"><br></td>
+        <td><input type="text" required placeholder="name" name="name"><br></td>
+    </tr>
+    <tr>
+        <td>Пол:</td>
+        <td><input type="text" required placeholder="sex" name="sex"><br></td>
     </tr>
     <tr>
         <td>Сколько тебе лет:</td>
-        <td><input type="text" required placeholder="age" name="Input your age"><br></td>
+        <td><input type="text" required placeholder="age" name="age"><br></td>
     </tr>
     <tr>
         <td> Hi, new User!</td>
