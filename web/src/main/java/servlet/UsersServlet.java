@@ -30,8 +30,7 @@ public class UsersServlet extends HttpServlet {
 
         String name = request.getParameter("name");
         String age = request.getParameter("age");
-        String sex = request.getParameter("sex");
-        String id = userService.saveUser(new User( name, age, sex));
+        String id = userService.saveUser(new User(name, age));
         log.info("user created:{} at {}", id, LocalDateTime.now());
         try {
             response.sendRedirect(request.getContextPath() + "/users");

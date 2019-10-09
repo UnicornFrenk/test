@@ -23,8 +23,8 @@ public class DefaultSecurityService implements SecurityService {
         return localInstance;
     }
 
-    public AuthUser userName(String userName, String password) {
-        AuthUser user = authUserDao.getByUserName(userName);
+    public AuthUser userName(String login, String password) {
+        AuthUser user = authUserDao.getByLogin(login);
         if (user == null) {
             return null;
         }

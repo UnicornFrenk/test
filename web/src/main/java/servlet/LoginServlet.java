@@ -1,6 +1,11 @@
 package servlet;
 
 
+import Model.AuthUser;
+import com.github.SecurityService;
+import com.github.UserService;
+import com.github.impl.DefaultSecurityService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,11 +24,11 @@ public class LoginServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userName = request.getParameter("username");
+        String login = request.getParameter("login");
         String password = request.getParameter("password");
-        Map<String, String> messages = new HashMap<String, String>();
+        Map<String, String> messages = new HashMap<>();
 
-        if (userName == null || userName.isEmpty()) {
+        if (login == null || login.isEmpty()) {
             messages.put("username", "Please enter username");
         }
 
@@ -31,19 +36,20 @@ public class LoginServlet extends HttpServlet {
             messages.put("password", "Please input password");
         }
 
-//        if (messages.isEmpty()){
-//            User user = UserService.find (userName,password);
-//
-//            if(user!=null){
-//                request.getSession().setAttribute("user",user);
-//                response.sendRedirect(request.getContextPath()+"/home");
-//                return;
-//            } else {
-//                messages.put("login","Unknown login, please try again");
-//            }
-//        }
+        if (messages.isEmpty()) {
+            SecurityService instance = DefaultSecurityService.getInstance();
+            AuthUser authUser = instance.userName(login, password);
+
+            if (authUser != null) {
+                request.getSession().setAttribute("authUser", authUser);
+                response.sendRedirect(request.getContextPath() + "/authUser");
+                return;
+            } else {
+                messages.put("login", "Unknown login, please try again");
+            }
+        }
 
         request.setAttribute("message", messages);
-        request.getRequestDispatcher("/user.jsp").forward(request, response);
+        request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 }

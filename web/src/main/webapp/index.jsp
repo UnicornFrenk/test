@@ -12,13 +12,18 @@
     <table>
         <tr>
             <td>
-                <form  action="${pageContext.request.contextPath}/login">
+                <form action="${pageContext.request.contextPath}/login">
                     <button type="submit" value="Войти">Войти</button>
                 </form>
             </td>
             <td>
-                <form  action="${pageContext.request.contextPath}/registration">
+                <form action="${pageContext.request.contextPath}/registration">
                     <button type="submit" value="Регистрация">Регистрация</button>
+                </form>
+            </td>
+            <td>
+                <form method="post" action="/createOrder">
+                    <input type="button" required placeholder="submit" value="crete order">
                 </form>
             </td>
         </tr>
@@ -27,42 +32,22 @@
     <br>
     <br>
 
-    <table>
-        <tr>
-            <td>
-                <form method="post" action="/alf">
-                    <input type="button" required placeholder="submit" value="АБВ">
-                </form>
-            </td>
-            <td>
-                <form method="post" action="/abc">
-                    <input type="button" required placeholder="submit" value="АВС">
-                </form>
-            </td>
-            <td>
-                <form method="post" action="/123">
-                    <input type="button" required placeholder="submit" value="123">
-                </form>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form method="post" action="/count">
-                    <input type="button" required placeholder="submit" value="Счет">
-                </form>
-            </td>
-            <td>
-                <form method="post" action="/words">
-                    <input type="button" required placeholder="submit" value="Слова">
-                </form>
-            </td>
-            <td>
-                <form method="post" action="/dk">
-                    <input type="button" required placeholder="submit" value="Пока хз">
-                </form>
-            </td>
-        </tr>
-    </table>
+
+    <form method="post" action="/items">
+        <input type="button" required placeholder="submit" value="items">
+    </form>
+
+    <form method="post" action="/categories">
+        <input type="button" required placeholder="submit" value="categories">
+    </form>
+
+    <form method="post" action="/basket">
+        <input type="button" required placeholder="submit" value="basket">
+    </form>
+
+    <form method="post" action="${pageContext.request.contextPath}/login">
+        <input type="button" required placeholder="submit" value="logout">
+    </form>
 
 </div>
 </body>

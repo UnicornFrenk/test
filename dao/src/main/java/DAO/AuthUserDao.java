@@ -4,6 +4,6 @@ package DAO;
 import Model.AuthUser;
 
 public interface AuthUserDao {
-    AuthUser getByUserName (String userName);
+    AuthUser getByLogin (String login);
     void saveAuthUser (AuthUser user);
 }

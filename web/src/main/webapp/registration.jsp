@@ -27,14 +27,6 @@
         <td><input type="text" required placeholder="name" name="name"><br></td>
     </tr>
     <tr>
-        <td>Пол:</td>
-        <td><input type="text" required placeholder="sex" name="sex"><br></td>
-    </tr>
-    <tr>
-        <td>Сколько тебе лет:</td>
-        <td><input type="text" required placeholder="age" name="age"><br></td>
-    </tr>
-    <tr>
         <td> Hi, new User!</td>
         <td>
 

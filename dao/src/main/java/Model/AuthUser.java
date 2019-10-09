@@ -1,32 +1,42 @@
 package Model;
 
 public class AuthUser {
-    private String id;
-    private String userName;
+    private Long id;
+    private String login;
     private String password;
     private ROLE role;
 
-    public AuthUser(String id, String userName, String password, ROLE role) {
+    public AuthUser(Long id, String login, String password, ROLE role) {
         this.id = id;
-        this.userName = userName;
+        this.login = login;
         this.password = password;
         this.role = role;
     }
 
-    public String getId() {
+    public AuthUser( String login, String password, ROLE role) {
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
+
+    public AuthUser() {
+
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getPassword() {

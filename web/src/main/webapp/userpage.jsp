@@ -8,6 +8,15 @@
     <title>UserPage</title>
 </head>
 <body>
-Информация для каждого юзера своя через фильтр
+<form method="post" action="/orders">
+    <input type="button" required placeholder="submit" value="orders">
+</form>
+<form method="post" action="/pay">
+    <input type="button" required placeholder="submit" value="pay">
+</form>
+
+<form method="post" action="${pageContext.request.contextPath}/mainPage">
+    <input type="button" required placeholder="submit" value="logout">
+</form>
 </body>
 </html>
