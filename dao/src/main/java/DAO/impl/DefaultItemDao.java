@@ -1,7 +1,6 @@
 package DAO.impl;
 
 import DAO.ItemDao;
-import Model.AuthUser;
 import Model.Item;
 import com.github.JDBCConnection;
 
@@ -27,7 +26,7 @@ public class DefaultItemDao implements ItemDao {
         return localInstance;
     }
 
-
+ @Override
     public Item getItemByName(String itemName) {
 
         try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement("select * from item where item_name = ?")) {
@@ -49,6 +48,16 @@ public class DefaultItemDao implements ItemDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+    }
+
+    @Override
+    public Item getItemByPrice(int priceForOne) {
+        return null;
+    }
+
+    @Override
+    public void save(Item item) {
 
     }
 
