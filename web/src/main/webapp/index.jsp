@@ -218,7 +218,7 @@
     </table>
 
     <form align="center" method="post" action="${pageContext.request.contextPath}/basket">
-        <button type="submit"  value="add to basket">add to basket</button>
+        <button type="submit" >add to basket</button>
     </form>
 
 </div>

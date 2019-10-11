@@ -214,6 +214,9 @@
             <form align="center" method="post" action="${pageContext.request.contextPath}/basket">
                 <button type="submit"  value="add to basket">add to basket</button>
             </form>
+            <form align="center" method="get" action="${pageContext.request.contextPath}/mainpage">
+                <button type="submit"  value="mainpage">main page</button>
+            </form>
             <br/>
         </c:when>
         <c:otherwise>

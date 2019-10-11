@@ -11,4 +11,5 @@ public interface AuthUserDao {
     void saveAuthUser (AuthUser user);
     List<AuthUser> getAll();
     AuthUser getRole(String login, String password);
+    AuthUser create(AuthUser authUser);
 }

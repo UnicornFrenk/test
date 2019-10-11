@@ -17,8 +17,8 @@ public class CreateOrderServlet extends HttpServlet {
 
 @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws  ServletException,IOException{
-    String item_id = request.getParameter("item_id");
-    request.setAttribute("item_id", item_id);
+//    String item_id = request.getParameter("item_id");
+//    request.setAttribute("item_id", item_id);
     request.getRequestDispatcher("/basket.jsp").forward(request, response);
 }
 }
