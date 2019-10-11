@@ -8,6 +8,7 @@
 <body>
 <div class="form">
     <h1>Hi! We glad to see you!</h1><br>
+    <h3>You can buy something only after registration!</h3>
 
     <table>
         <tr>
@@ -22,8 +23,8 @@
                 </form>
             </td>
             <td>
-                <form method="post" action="/createOrder">
-                    <input type="button" required placeholder="submit" value="crete order">
+                <form align="right" method="get" action="${pageContext.request.contextPath}/createOrder">
+                    <button type="submit" style="text-align:right" value="crete order">Create order</button>
                 </form>
             </td>
         </tr>
@@ -32,21 +33,192 @@
     <br>
     <br>
 
+    Items list
+    <table border="3">
+        <tr bgcolor="gray">
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td>how much you need</td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td>i_want_it</td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_categor</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+        <tr>
+            <td>item_id</td>
+            <td>item_name</td>
+            <td>item_description</td>
+            <td>item_quantity</td>
+            <td><select>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+            </select></td>
+            <td>item_category</td>
+            <td>price_for_one</td>
+            <td><input type="checkbox"></td>
+        </tr>
+    </table>
 
-    <form method="post" action="/items">
-        <input type="button" required placeholder="submit" value="items">
-    </form>
-
-    <form method="post" action="/categories">
-        <input type="button" required placeholder="submit" value="categories">
-    </form>
-
-    <form method="post" action="/basket">
-        <input type="button" required placeholder="submit" value="basket">
-    </form>
-
-    <form method="post" action="${pageContext.request.contextPath}/login">
-        <input type="button" required placeholder="submit" value="logout">
+    <form align="center" method="post" action="${pageContext.request.contextPath}/basket">
+        <button type="submit"  value="add to basket">add to basket</button>
     </form>
 
 </div>

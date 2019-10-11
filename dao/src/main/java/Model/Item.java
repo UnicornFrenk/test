@@ -12,6 +12,14 @@ public class Item {
     public Item() {
     }
 
+    public Item(String itemName, String itemDescription, long itemQuantity, int itemCategoryId, long priceForOne) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemQuantity = itemQuantity;
+        this.itemCategoryId = itemCategoryId;
+        this.priceForOne = priceForOne;
+    }
+
     public Item(Long id, String itemName, String itemDescription, long itemQuantity, int itemCategoryId, long priceForOne) {
         this.id = id;
         this.itemName = itemName;

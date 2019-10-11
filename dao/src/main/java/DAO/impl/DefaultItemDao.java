@@ -33,6 +33,28 @@ public class DefaultItemDao implements ItemDao {
             preparedStatement.setString(1, itemName);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                String item_name = resultSet.getString("item_name");
+                String item_description= resultSet.getString("item_description");
+                long item_quantity = resultSet.getLong("item_quantity");
+                int item_category_id = resultSet.getInt("item_category_id ");
+                long price_for_one = resultSet.getLong("price_for_one");
+                return new Item(item_name,item_description,item_quantity,item_category_id,price_for_one);
+            }
+            else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public Item getItemByPrice(long priceForOne) {
+        try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement("select * from item where price_for_one > ?")) {
+            preparedStatement.setLong(1, priceForOne);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
                 Long item_id = resultSet.getLong("item_id");
                 String item_name = resultSet.getString("item_name");
                 String item_description= resultSet.getString("item_description");
@@ -48,12 +70,6 @@ public class DefaultItemDao implements ItemDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-    }
-
-    @Override
-    public Item getItemByPrice(int priceForOne) {
-        return null;
     }
 
     @Override

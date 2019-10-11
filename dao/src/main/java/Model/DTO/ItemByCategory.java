@@ -1,7 +1,5 @@
 package Model.DTO;
 
-import Model.Category;
-
 public class ItemByCategory {
 
     String item_name;
