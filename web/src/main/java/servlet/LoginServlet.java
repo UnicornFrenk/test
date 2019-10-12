@@ -5,6 +5,8 @@ import Model.AuthUser;
 import com.github.SecurityService;
 import com.github.UserService;
 import com.github.impl.DefaultSecurityService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +19,8 @@ import java.util.Map;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginServlet.class);
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -45,6 +49,7 @@ public class LoginServlet extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/authUser");
                 return;
             } else {
+                log.warn("user {} couldn't log in with password {}", login, password);
                 messages.put("login", "Unknown login, please try again");
             }
         }

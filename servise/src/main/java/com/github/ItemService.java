@@ -1,10 +1,11 @@
-package DAO;
+package com.github;
 
 import Model.Item;
 
 import java.util.List;
 
-public interface ItemDao {
+public interface ItemService {
+
     Item createItem(Item item);
 
     Item readItem(String item_name);

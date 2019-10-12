@@ -1,4 +1,5 @@
 package servlet;
+import Model.AuthUser;
 import Model.User;
 import com.github.impl.DefaultUserService;
 import com.github.UserService;
@@ -20,7 +21,7 @@ public class UsersServlet extends HttpServlet {
     private UserService userService = DefaultUserService.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        List<User> users = userService.getUsers();
+        List<AuthUser> users = userService.getAuthUsers();
         request.setAttribute("users", users);
         WebUtils.forword("users", request, response);
     }

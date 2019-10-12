@@ -58,4 +58,10 @@ public class AuthUser {
     public enum ROLE {
         USER, ADMIN, UNKNOWN
     }
+
+
+    @Override
+    public String toString() {
+        return "AuthUser{" + "id=" + id + ", login='" + login + '\'' + ", password='" + password + '\'' + ", role=" + role + '}';
+    }
 }

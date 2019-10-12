@@ -6,9 +6,14 @@ import Model.User;
 import java.util.List;
 
 public interface UserService {
-    List<User> getUsers();
 
-   String saveUser(User user);
+    AuthUser getByLogin(String login);
 
-    void saveAuthUser(AuthUser authUser);
+    List<AuthUser> getAll();
+
+    AuthUser.ROLE getRole(String login, String password);
+
+    AuthUser create(AuthUser authUser);
+
+
 }

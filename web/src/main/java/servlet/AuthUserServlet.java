@@ -19,7 +19,6 @@ public class AuthUserServlet extends HttpServlet {
     public void doPost(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
         String login = rq.getParameter("login");
         rq.setAttribute("login", login);
-
         rq.getRequestDispatcher("/authUser.jsp").forward(rq, rs);
     }
 }

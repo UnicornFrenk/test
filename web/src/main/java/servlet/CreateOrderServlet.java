@@ -15,10 +15,10 @@ public class CreateOrderServlet extends HttpServlet {
         request.getRequestDispatcher("/createOrder.jsp").forward(request, response);
     }
 
-@Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws  ServletException,IOException{
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //    String item_id = request.getParameter("item_id");
 //    request.setAttribute("item_id", item_id);
-    request.getRequestDispatcher("/basket.jsp").forward(request, response);
-}
+        request.getRequestDispatcher("/basket.jsp").forward(request, response);
+    }
 }
