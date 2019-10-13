@@ -19,6 +19,10 @@ public class AuthUser {
         this.role = role;
     }
 
+    public AuthUser (String login,String password){
+        this.login = login;
+        this.password = password;
+    }
     public AuthUser() {
 
     }

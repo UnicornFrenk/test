@@ -1,6 +1,8 @@
 package servlet;
 
 
+import Dao.impl.DefaultAuthUserDao;
+import Model.AuthUser;
 import Model.User;
 import com.github.UserService;
 
@@ -24,6 +26,10 @@ public class RegistrationServlet extends HttpServlet {
     public void doPost(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
         String login = rq.getParameter("login");
         rq.setAttribute("login", login);
+        String password = rq.getParameter("password");
+        rq.setAttribute("password",password);
+
+        DefaultAuthUserDao.getInstance().create(new AuthUser(login,password));
 
         rq.getRequestDispatcher("/login.jsp").forward(rq, rs);
     }

@@ -1,7 +1,6 @@
-package DAO.impl;
+package Dao.impl;
 
-import DAO.ItemDao;
-import Model.AuthUser;
+import Dao.ItemDao;
 import Model.Item;
 import com.github.JDBCConnection;
 import org.slf4j.Logger;
@@ -15,20 +14,28 @@ public class DefaultItemDao implements ItemDao {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultItemDao.class);
 
-    private static volatile ItemDao instance;
+    private static class SingletonHolder {
+        static final ItemDao HOLDER_INSTANCE = new DefaultItemDao();
+    }
 
     public static ItemDao getInstance() {
-        ItemDao localInstance = instance;
-        if (localInstance == null) {
-            synchronized (ItemDao.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new DefaultItemDao();
-                }
-            }
-        }
-        return localInstance;
+        return DefaultItemDao.SingletonHolder.HOLDER_INSTANCE;
     }
+
+    //private static volatile ItemDao instance;
+
+//    public static ItemDao getInstance() {
+//        ItemDao localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (ItemDao.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    instance = localInstance = new DefaultItemDao();
+//                }
+//            }
+//        }
+//        return localInstance;
+//    }
 
 
     private static final String createItem = "insert into item (item_name, item_description, item_quantity,item_category_id,price_for_one) values (?,?,?,?,?)";

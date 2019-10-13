@@ -15,5 +15,7 @@ public interface UserService {
 
     AuthUser create(AuthUser authUser);
 
+    AuthUser saveUser(AuthUser user);
 
+    int deleteUser(String name);
 }

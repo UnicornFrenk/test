@@ -1,4 +1,4 @@
-//package DAO.impl;
+//package Dao.impl;
 //
 //import Model.Item;
 //import org.junit.Test;

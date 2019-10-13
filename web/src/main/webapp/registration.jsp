@@ -18,14 +18,7 @@
         <td>Введите пароль:</td>
         <td><input type="password" required placeholder="password" name="password"><br></td>
     </tr>
-    <tr>
-        <td>Повторите пароль:</td>
-        <td><input type="password" required placeholder="repeat" name="password2"><br></td>
-    </tr>
-    <tr>
-        <td>Введи свое имя:</td>
-        <td><input type="text" required placeholder="name" name="name"><br></td>
-    </tr>
+
     <tr>
         <td> Hi, new User!</td>
         <td>

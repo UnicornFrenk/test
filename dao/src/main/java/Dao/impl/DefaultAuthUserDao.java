@@ -1,6 +1,6 @@
-package DAO.impl;
+package Dao.impl;
 
-import DAO.AuthUserDao;
+import Dao.AuthUserDao;
 import Model.AuthUser;
 import com.github.JDBCConnection;
 
@@ -11,34 +11,40 @@ import java.util.List;
 
 public class DefaultAuthUserDao implements AuthUserDao {
 
-    private static volatile AuthUserDao instance = null;
+    private static class SingletonHolder {
+        static final AuthUserDao HOLDER_INSTANCE = new DefaultAuthUserDao();
+    }
 
-    private static final String createAuthUser = "insert into auth_users (name_auth, login, password, role) values (?,?,?,?)";
+    public static AuthUserDao getInstance() {
+        return DefaultAuthUserDao.SingletonHolder.HOLDER_INSTANCE;
+    }
+    //private static volatile AuthUserDao instance = null;
+
+    private static final String createAuthUser = "insert into auth_users (login, password, role) values (?,?,?)";
     private static final String getRole = "select * from db.auth_users where login = ? and password = ?";
     private static final String getByLogin = "select * from db.auth_users where login = ?";
 
 
-    public static AuthUserDao getInstance() {
-        AuthUserDao localInstance = instance;
-        if (localInstance == null) {
-            synchronized (AuthUserDao.class) {
-                localInstance = instance;
-                if (localInstance == null) {
-                    instance = localInstance = new DefaultAuthUserDao();
-                }
-            }
-        }
-        return localInstance;
-    }
+//    public static AuthUserDao getInstance() {
+//        AuthUserDao localInstance = instance;
+//        if (localInstance == null) {
+//            synchronized (AuthUserDao.class) {
+//                localInstance = instance;
+//                if (localInstance == null) {
+//                    instance = localInstance = new DefaultAuthUserDao();
+//                }
+//            }
+//        }
+//        return localInstance;
+//    }
 
     @Override
     public AuthUser create(AuthUser authUser) {
         try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(createAuthUser, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, authUser.getLogin());
-            preparedStatement.setString(2, authUser.getLogin());
-            preparedStatement.setString(3, authUser.getPassword());
-            preparedStatement.setString(4, authUser.getRole().name());
+            preparedStatement.setString(2, authUser.getPassword());
+            preparedStatement.setString(3, String.valueOf(AuthUser.ROLE.USER));
             boolean isSuccess = preparedStatement.executeUpdate() > 0;
             if (isSuccess) {
                 long id;
@@ -58,10 +64,24 @@ public class DefaultAuthUserDao implements AuthUserDao {
     }
 
 
+    private static final String deleteUser = "delete from auth_users where login = ?";
+
+    @Override
+    public int deleteUser(String name) {
+
+        try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(deleteUser)) {
+            preparedStatement.setString(1, name);
+            return preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+        }
+    }
+
     public AuthUser getByLogin(String login) {
 
-        try (Connection connection = JDBCConnection.connect();
-             PreparedStatement preparedStatement = connection.prepareStatement(getByLogin)) {
+        try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(getByLogin)) {
             preparedStatement.setString(1, login);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {

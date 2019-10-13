@@ -1,4 +1,4 @@
-package DAO;
+package Dao;
 
 
 import Model.AuthUser;
@@ -15,4 +15,6 @@ public interface AuthUserDao {
     AuthUser.ROLE getRole(String login, String password);
 
     AuthUser create(AuthUser authUser);
+
+    int deleteUser(String name);
 }

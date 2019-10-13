@@ -1,8 +1,11 @@
 package servlet;
+
 import Model.AuthUser;
-import Model.User;
-import com.github.impl.DefaultUserService;
+import Model.Item;
+import com.github.ItemService;
 import com.github.UserService;
+import com.github.impl.DefaultItemServise;
+import com.github.impl.DefaultUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,27 +14,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.List;
 
-
-@WebServlet("/users")
-public class UsersServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(UsersServlet.class);
+@WebServlet("/deleteUser")
+public class DeleteUserServlet extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(DeleteUserServlet.class);
     private UserService userService = DefaultUserService.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
+
         List<AuthUser> users = userService.getAll();
-        request.setAttribute("users", users);
+        request.setAttribute("items", users);
         WebUtils.forword("users", request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
-        userService.saveUser(new AuthUser(login,password));
-        log.info("user created:{} at {}", login, LocalDateTime.now());
+        String name = request.getParameter("deleteUser");
+        userService.deleteUser(name);
         try {
             response.sendRedirect(request.getContextPath() + "/users");
         } catch (IOException e) {
@@ -39,5 +39,4 @@ public class UsersServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
-
 }

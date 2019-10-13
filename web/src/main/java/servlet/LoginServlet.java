@@ -1,9 +1,9 @@
 package servlet;
 
 
+import Dao.impl.DefaultAuthUserDao;
 import Model.AuthUser;
 import com.github.SecurityService;
-import com.github.UserService;
 import com.github.impl.DefaultSecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,6 +48,15 @@ public class LoginServlet extends HttpServlet {
             if (authUser != null) {
                 request.getSession().setAttribute("authUser", authUser);
                 response.sendRedirect(request.getContextPath() + "/authUser");
+                DefaultAuthUserDao userDao = new DefaultAuthUserDao();
+                AuthUser user = userDao.getByLogin(authUser.getLogin());
+
+                HttpSession session = request.getSession(false);
+                if (session == null || session.getAttribute("authUser") == null) {
+                    request.getRequestDispatcher("/authUser.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("/login.jsp").forward(request, response);
+                }
                 return;
             } else {
                 log.warn("user {} couldn't log in with password {}", login, password);
@@ -55,6 +65,6 @@ public class LoginServlet extends HttpServlet {
         }
 
         request.setAttribute("message", messages);
-        request.getRequestDispatcher("/login.jsp").forward(request, response);
+        //request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 }

@@ -33,9 +33,9 @@
     <br>
     <br>
 
-    <%@include file="itemList.jsp"%>
-    
-    <a href="${pageContext.request.contextPath}/users">link</a>
+    <%--<%@include file="itemlist.jsp"%>--%>
+    <a href="${pageContext.request.contextPath}/itemlist">items</a>
+    <a href="${pageContext.request.contextPath}/users">users</a>
 
 </div>
 </body>

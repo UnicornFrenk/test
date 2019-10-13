@@ -6,7 +6,11 @@ import com.github.UserService;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Matchers.any;
@@ -30,4 +34,13 @@ public class DefaultUserServiceTest {
 //        assertEquals("CustomLastName",user.getLastName());
 
     }
+
+
+//    @Test
+//    public void getAll(){
+//        userService = new DefaultUserService();
+//        List<String> data = new ArrayList<>();
+//        data.add("user");
+//        Mockito.when(userService.getAll()).thenReturn(data);
+//    }
 }

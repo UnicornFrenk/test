@@ -1,10 +1,7 @@
-package DAO.impl;
+package Dao.impl;
 
-import Model.AuthUser;
 import Model.Item;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class DefaultItemDaoTest {
 

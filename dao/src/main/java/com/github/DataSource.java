@@ -39,14 +39,21 @@ public class DataSource {
 
     }
 
-    public static synchronized DataSource getInstance() {
-        if (datasource == null) {
-            datasource = new DataSource();
-            return datasource;
-        } else {
-            return datasource;
-        }
+    private static class SingletonHolder {
+        static final DataSource HOLDER_INSTANCE = new DataSource();
     }
+    public static DataSource getInstance() {
+        return DataSource.SingletonHolder.HOLDER_INSTANCE;
+    }
+
+//    public static synchronized DataSource getInstance() {
+//        if (datasource == null) {
+//            datasource = new DataSource();
+//            return datasource;
+//        } else {
+//            return datasource;
+//        }
+//    }
 
     public Connection getConnection() {
         try {
