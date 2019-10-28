@@ -1,8 +1,8 @@
-package Dao.impl;
+package com.github.dao.impl;
 
-import Dao.AuthUserDao;
-import Model.AuthUser;
-import com.github.JDBCConnection;
+import com.github.dao.AuthUserDao;
+import com.github.jdbc.JDBCConnection;
+import com.github.model.AuthUser;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -97,10 +97,6 @@ public class DefaultAuthUserDao implements AuthUserDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-    }
-
-    public void saveAuthUser(AuthUser user) {
 
     }
 

@@ -1,8 +1,7 @@
-package com.github;
+package com.github.connection;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
+import com.github.jdbc.JDBCConnection;
+import org.junit.jupiter.api.Test;
 
 public class JDBCConnectionTest {
 

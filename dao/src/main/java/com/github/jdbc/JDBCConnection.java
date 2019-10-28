@@ -1,4 +1,4 @@
-package com.github;
+package com.github.jdbc;
 
 import java.sql.*;
 import java.util.ArrayList;

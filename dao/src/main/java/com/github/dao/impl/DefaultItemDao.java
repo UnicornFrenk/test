@@ -1,8 +1,8 @@
-package Dao.impl;
+package com.github.dao.impl;
 
-import Dao.ItemDao;
-import Model.Item;
-import com.github.JDBCConnection;
+import com.github.dao.ItemDao;
+import com.github.model.Item;
+import com.github.jdbc.JDBCConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,9 +71,9 @@ public class DefaultItemDao implements ItemDao {
     private static final String readItemByItemName = "select * from item where item_name = ?";
 
     @Override
-    public Item readItem(String item_name) {
+    public Item readItem(String itemName) {
         try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(readItemByItemName)) {
-            preparedStatement.setString(1, item_name);
+            preparedStatement.setString(1, itemName);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     long id = resultSet.getLong("item_id");
@@ -81,7 +81,7 @@ public class DefaultItemDao implements ItemDao {
                     Long quantity = resultSet.getLong("item_quantity");
                     int categoryId = resultSet.getInt("item_category_id");
                     Long price = resultSet.getLong("price_for_one");
-                    return new Item(id, item_name, description, quantity, categoryId, price);
+                    return new Item(id, itemName, description, quantity, categoryId, price);
                 } else {
                     return null;
                 }
@@ -95,14 +95,14 @@ public class DefaultItemDao implements ItemDao {
 
 
     @Override
-    public int updateItem(String item_name, int category) {
+    public int updateItem(String itemName, int category) {
         try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(updateItem)) {
             preparedStatement.setInt(1, category);
-            preparedStatement.setString(2, item_name);
+            preparedStatement.setString(2, itemName);
             return preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            log.warn("item {} can't be updated {}", item_name, category);
+            log.warn("item {} can't be updated {}", itemName, category);
             throw new RuntimeException(e);
         }
     }

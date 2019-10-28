@@ -1,6 +1,6 @@
-package Dao;
+package com.github.dao;
 
-import Model.Item;
+import com.github.model.Item;
 
 import java.util.List;
 

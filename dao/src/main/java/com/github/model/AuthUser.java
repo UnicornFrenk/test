@@ -1,4 +1,6 @@
-package Model;
+package com.github.model;
+
+import java.util.Objects;
 
 public class AuthUser {
     private Long id;
@@ -63,6 +65,18 @@ public class AuthUser {
         USER, ADMIN, UNKNOWN
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AuthUser user = (AuthUser) o;
+        return Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && role == user.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, login, password, role);
+    }
 
     @Override
     public String toString() {

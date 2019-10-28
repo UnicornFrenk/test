@@ -1,14 +1,13 @@
-package Dao;
+package com.github.dao;
 
 
-import Model.AuthUser;
+import com.github.model.AuthUser;
 
 import java.util.List;
 
 public interface AuthUserDao {
     AuthUser getByLogin(String login);
 
-    void saveAuthUser(AuthUser user);
 
     List<AuthUser> getAll();
 
@@ -17,4 +16,5 @@ public interface AuthUserDao {
     AuthUser create(AuthUser authUser);
 
     int deleteUser(String name);
+
 }
