@@ -1,82 +1,68 @@
 package com.github.hib.entity;
 
 
-import javax.persistence.*;
-import java.util.Objects;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "user")
-public class Person {
+@Table(name = "PERSON")
+public class Person{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "person_id")
     private Integer id;
+    @Column(name = "login")
     private String login;
+    @Column(name = "password")
     private String password;
+    @Column
     private Role role;
 
-    public Person(Integer id, String login, String password, Role role) {
+    @OneToOne(mappedBy = "person", fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private  PersonDetails personDetails;
+
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Order> orders = new ArrayList<>();
+
+
+    public Person(Integer id, String login, String password, Role role, PersonDetails personDetails) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
+        this.personDetails = personDetails;
     }
 
-    public Person() {
+    public Person(Integer id, String login, String password, Role role) {
+        this(id, login, password, role, null);
     }
 
     public Person(String login, String password) {
-        this.login = login;
-        this.password = password;
+        this(null, login, password, null, null);
     }
 
-    public Integer getId() {
-        return id;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-    @Column
-    public String getLogin() {
-        return login;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-    @Column
-    public String getPassword() {
-        return password;
+    public PersonDetails getPersonDetails(){
+        return personDetails;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    @Column
-    @Enumerated(EnumType.STRING)
-    public Role getRole() {
-        return role;
+    public void setPersonDetails(){
+        this.personDetails = personDetails;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Person)) return false;
-        Person user2 = (Person) o;
-        return Objects.equals(id, user2.id) && Objects.equals(login, user2.login) && Objects.equals(password, user2.password) && Objects.equals(role, user2.role);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, login, password, role);
-    }
-
-    @Override
-    public String toString() {
-        return "User{" + "id=" + id + ", login='" + login + '\'' + ", password='" + password + '\'' + ", role='" + role + '\'' + '}';
-    }
 }
