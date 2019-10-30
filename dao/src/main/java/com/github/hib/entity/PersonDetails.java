@@ -12,36 +12,35 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "PERSON_DETAILS")
-public class PersonDetails {
+@Table(name = "personDetails")
+public class PersonDetails{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "user_id")
+    private Integer userId;
 
-    @Column(name = "STREET")
+    @Column(name = "street")
     private String street;
 
-    @Column(name = "CITY")
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "STATE")
+    @Column(name = "state")
     private String state;
 
-    @Column(name = "COUNTRY")
+    @Column(name = "country")
     private String country;
 
-    @OneToOne( mappedBy = "person", fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
     private Person person;
 
-
-    public Person getPerson(){
+    @OneToOne(mappedBy = "personDetails")
+    @JoinColumn(name = "user_Id")
+    public Person getPerson() {
         return person;
     }
 
-    public void setPerson(){
+    public void setPerson(Person person) {
         this.person = person;
     }
 }
