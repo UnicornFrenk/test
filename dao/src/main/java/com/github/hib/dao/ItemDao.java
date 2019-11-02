@@ -1,15 +1,18 @@
 package com.github.hib.dao;
 
-import com.github.hib.entity.Item;
-import com.github.hib.util.EntityManagerUtil;
+import com.github.hib.entity.ItemEntity;
+import com.github.model.Item;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
-public class ItemDao {
-    public void save(Item item) {
-        EntityManager entityManager = EntityManagerUtil.getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(item);
-        entityManager.getTransaction().commit();
-    }
+public interface ItemDao {
+    Item createItem(ItemEntity item);
+
+    Item readItem(String item_name);
+
+    int updateItem(String name, int category);
+    int deleteItem(String name);
+    List<Item> getAll();
+
+
 }

@@ -1,15 +1,19 @@
 package com.github.hib.dao;
 
-import com.github.hib.entity.Person;
-import com.github.hib.util.EntityManagerUtil;
+import com.github.hib.entity.Role;
+import com.github.model.Person;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
-public class PersonDao {
-    public void save(Person user) {
-        EntityManager entityManager = EntityManagerUtil.getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(user);
-        entityManager.getTransaction().commit();
-    }
+public interface PersonDao {
+
+
+    int createPerson(Person person);
+
+    Person getByLogin(String login);
+    Person getByRole(Role role);
+
+    Person updatePerson(Integer id);
+    void deletePerson(String login);
+    List<Person> getAll();
 }

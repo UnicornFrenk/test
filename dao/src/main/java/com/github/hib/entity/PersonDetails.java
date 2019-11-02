@@ -1,18 +1,17 @@
 package com.github.hib.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "personDetails")
+@Getter
+@Setter
 public class PersonDetails{
 
     @Id
@@ -32,15 +31,27 @@ public class PersonDetails{
     @Column(name = "country")
     private String country;
 
-    private Person person;
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private PersonEntity person;
 
-    @OneToOne(mappedBy = "personDetails")
-    @JoinColumn(name = "user_Id")
-    public Person getPerson() {
+    public PersonDetails(String street, String city, String state, String country) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.country = country;
+    }
+
+    public PersonEntity getPerson() {
         return person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(PersonEntity person) {
         this.person = person;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonDetails{" + "userId=" + userId + ", street='" + street + '\'' + ", city='" + city + '\'' + ", state='" + state + '\'' + ", country='" + country + '\'';
     }
 }

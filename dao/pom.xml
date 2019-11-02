@@ -45,5 +45,11 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate.hql</groupId>
+            <artifactId>hibernate-hql-parser</artifactId>
+            <version>1.5.0.Final</version>
+        </dependency>
+
     </dependencies>
 </project>

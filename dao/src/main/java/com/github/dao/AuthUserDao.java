@@ -1,19 +1,19 @@
 package com.github.dao;
 
 
-import com.github.model.AuthUser;
+import com.github.model.Person;
 
 import java.util.List;
 
 public interface AuthUserDao {
-    AuthUser getByLogin(String login);
+    Person getByLogin(String login);
 
 
-    List<AuthUser> getAll();
+    List<Person> getAll();
 
-    AuthUser.ROLE getRole(String login, String password);
+    String  getRole(String login, String password);
 
-    AuthUser create(AuthUser authUser);
+    Person create(Person authUser);
 
     int deleteUser(String name);
 

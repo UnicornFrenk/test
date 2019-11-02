@@ -1,6 +1,6 @@
 package com.github.hib.dao;
 
-import com.github.hib.entity.Person;
+import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.PersonDetails;
 import com.github.hib.util.EntityManagerUtil;
 import org.junit.Assert;
@@ -12,7 +12,7 @@ public class OneToOneTest {
 
     @Test
     public void saveTest(){
-        Person person = new Person(null,"log", "pass", null, null);
+        PersonEntity person = new PersonEntity(null,"log", "pass", null, null);
         PersonDetails personDetails = new PersonDetails(null, "Sadovaya", "Minsk", "", "Belarus", person);
         person.setPersonDetails(personDetails);
         EntityManager em = EntityManagerUtil.getEntityManager();
@@ -22,7 +22,7 @@ public class OneToOneTest {
 
         em.clear();
 
-        Person personFromDb = em.find(Person.class,3L);
+        PersonEntity personFromDb = em.find(PersonEntity.class,person.getId());
         Assert.assertEquals(person.getLogin(), personFromDb.getLogin());
 
 
@@ -30,7 +30,7 @@ public class OneToOneTest {
 
     @Test
     public void mergeCascadeTest() {
-        Person person = new Person(null, "log", "pass", null, null);
+        PersonEntity person = new PersonEntity(null, "log", "pass", null, null);
         PersonDetails personDetails = new PersonDetails(null, "Sadovaya", "Minsk", "", "Belarus", person);
         person.setPersonDetails(personDetails);
 
@@ -41,7 +41,7 @@ public class OneToOneTest {
 
         em.clear();
 
-        Person personFromDb = em.find(Person.class, 1L);
+        PersonEntity personFromDb = em.find(PersonEntity.class, person.getId());
 
         personFromDb.getPersonDetails().setCity("Kiev");
         em.getTransaction().begin();

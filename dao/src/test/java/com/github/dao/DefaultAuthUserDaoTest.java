@@ -1,7 +1,8 @@
 package com.github.dao;
 
 import com.github.dao.impl.DefaultAuthUserDao;
-import com.github.model.AuthUser;
+import com.github.hib.entity.Role;
+import com.github.model.Person;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class DefaultAuthUserDaoTest {
 
     @Test
     public void create() {
-        AuthUser test = new AuthUser("Lola","Lola", AuthUser.ROLE.USER);
+        Person test = new Person("Lola","Lola", Role.USER);
         DefaultAuthUserDao.getInstance().create(test);
         String login = test.getLogin();
         String exp = "Lola";
@@ -28,7 +29,7 @@ public class DefaultAuthUserDaoTest {
 
     @Test
     public void getByLogin() {
-        AuthUser test =  DefaultAuthUserDao.getInstance().getByLogin("Sofia");
+        Person test =  DefaultAuthUserDao.getInstance().getByLogin("Sofia");
         String password = test.getPassword();
         String expPassword = "Sofia";
         assertEquals(expPassword,password);
@@ -40,15 +41,15 @@ public class DefaultAuthUserDaoTest {
 
     @Test
     public void getAll() {
-        List<AuthUser> expected = DefaultAuthUserDao.getInstance().getAll();
+        List<Person> expected = DefaultAuthUserDao.getInstance().getAll();
         assertNotNull(expected);
     }
 
     @Test
     public void getRole() {
 
-        AuthUser.ROLE role = DefaultAuthUserDao.getInstance().getRole("Sofia", "Sofia");
-        AuthUser.ROLE exp = AuthUser.ROLE.USER;
+        String role = DefaultAuthUserDao.getInstance().getRole("Sofia", "Sofia");
+        Role exp = Role.USER;
         assertEquals( exp,role);
 
     }

@@ -1,26 +1,68 @@
 package com.github.hib.dao;
 
-import com.github.hib.entity.Person;
+import com.github.hib.dao.impl.DefaultPersonDao;
+import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.Role;
-import com.github.hib.util.EntityManagerUtil;
-import org.junit.Before;
+import com.github.hib.util.HibernateUtil;
+import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
-
-import javax.persistence.EntityManager;
 
 
 public class PersonDaoTest {
 
-    @Before
-    public void init() {
-        EntityManager entityManager = EntityManagerUtil.getEntityManager("com.github.hib");
+    private PersonEntity savePerson() {
+        Session session = HibernateUtil.getSession();
+        PersonEntity person = new PersonEntity("Matew", "mmm");
+        session.beginTransaction();
+        session.save(person);
+        session.getTransaction().commit();
+        session.close();
+        return person;
     }
 
     @Test
-    public void testSave() {
-        Person testPerson = new Person(null, "Fok", "Test", Role.USER);
-        PersonDao uDao = new PersonDao();
-        uDao.save(testPerson);
+    public void saveSession() {
+        Session session = HibernateUtil.getSession();
+        PersonEntity person = new PersonEntity("Map", "123");
+        person.setRole(Role.USER);
+        session.beginTransaction();
+        session.save(person);
+        session.getTransaction().commit();
+        session.close();
+
     }
+
+    @Test
+    public void updateSession() {
+        final PersonEntity person = savePerson();
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        person.setLogin("Ad");
+        session.saveOrUpdate(person);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Test
+    public void deleteSession() {
+        PersonEntity person = savePerson();
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        person = session.get(PersonEntity.class, person.getId());
+        session.delete(person);
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Test
+    public void read() {
+        final PersonEntity person = savePerson();
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        session.get(PersonEntity.class, person.getId());
+        session.getTransaction().commit();
+        session.close();
+    }
+
 
 }

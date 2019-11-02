@@ -1,16 +1,16 @@
 package com.github.hib.dao;
 
-import com.github.hib.entity.Order;
-import com.github.hib.util.EntityManagerUtil;
+import com.github.model.Order;
 
-import javax.persistence.EntityManager;
+import java.util.List;
 
-public class OrderDao {
+public interface OrderDao {
 
-    public void save(Order order) {
-        EntityManager entityManager = EntityManagerUtil.getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(order);
-        entityManager.getTransaction().commit();
-    }
+    Order createOrder(Order order);
+
+    Order readOrder(int id);
+
+    Order updateOrder(int id);
+    int deleteOrder(int id);
+    List<Order> getAll();
 }

@@ -1,8 +1,9 @@
 package com.github.dao.impl;
 
 import com.github.dao.AuthUserDao;
+import com.github.hib.entity.Role;
 import com.github.jdbc.JDBCConnection;
-import com.github.model.AuthUser;
+import com.github.model.Person;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -39,18 +40,18 @@ public class DefaultAuthUserDao implements AuthUserDao {
 //    }
 
     @Override
-    public AuthUser create(AuthUser authUser) {
+    public Person create(Person authUser) {
         try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(createAuthUser, Statement.RETURN_GENERATED_KEYS)) {
 
             preparedStatement.setString(1, authUser.getLogin());
             preparedStatement.setString(2, authUser.getPassword());
-            preparedStatement.setString(3, String.valueOf(AuthUser.ROLE.USER));
+            preparedStatement.setString(3, String.valueOf(Role.USER));
             boolean isSuccess = preparedStatement.executeUpdate() > 0;
             if (isSuccess) {
-                long id;
+                int id;
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     generatedKeys.next();
-                    id = generatedKeys.getLong(1);
+                    id = generatedKeys.getInt(1);
                 }
                 authUser.setId(id);
                 return authUser;
@@ -79,17 +80,17 @@ public class DefaultAuthUserDao implements AuthUserDao {
         }
     }
 
-    public AuthUser getByLogin(String login) {
+    public Person getByLogin(String login) {
 
         try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(getByLogin)) {
             preparedStatement.setString(1, login);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    long id = resultSet.getLong("id_auth");
+                    int id = resultSet.getInt("id_auth");
                     String password = resultSet.getString("password");
                     String role = resultSet.getString("role");
-                    AuthUser.ROLE roleEnum = AuthUser.ROLE.valueOf(role);
-                    return new AuthUser(id, login, password, roleEnum);
+                    Role roleEnum = Role.valueOf(role);
+                    return new Person(id, login, password, roleEnum);
                 } else {
                     return null;
                 }
@@ -101,23 +102,23 @@ public class DefaultAuthUserDao implements AuthUserDao {
     }
 
 
-    private AuthUser userEntity(ResultSet rs) throws SQLException {
-        AuthUser userEntity = new AuthUser();
-        userEntity.setId(rs.getLong("id_auth"));
-        userEntity.setLogin(rs.getString("login"));
-        userEntity.setPassword(rs.getString("password"));
-        userEntity.setRole(AuthUser.ROLE.valueOf(rs.getString("role")));
+    private Person userEntity(ResultSet rs) throws SQLException {
+        Person person = new Person();
+        person.setId(rs.getInt("id_auth"));
+        person.setLogin(rs.getString("login"));
+        person.setPassword(rs.getString("password"));
+        person.setRole(Role.valueOf(rs.getString("role")));
 
-        return userEntity;
+        return person;
     }
 
     private static final String getAllUser = "SELECT * FROM db.auth_users";
 
     @Override
-    public List<AuthUser> getAll() {
+    public List<Person> getAll() {
         try (Connection connection = JDBCConnection.connect()) {
             PreparedStatement statement = connection.prepareStatement(getAllUser);
-            List<AuthUser> userList;
+            List<Person> userList;
             try (ResultSet resultSet = statement.executeQuery()) {
                 userList = new ArrayList<>();
                 while (resultSet.next()) {
@@ -132,17 +133,17 @@ public class DefaultAuthUserDao implements AuthUserDao {
     }
 
     @Override
-    public AuthUser.ROLE getRole(String login, String password) {
+    public String getRole(String login, String password) {
         try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(getRole)) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                long id = resultSet.getLong("id_auth");
+                int id = resultSet.getInt("id_auth");
                 String role = resultSet.getString("role");
-                System.out.println(AuthUser.class.toString());
+                System.out.println(Person.class.toString());
                 System.out.println("id=" + id + "," + "login=" + login + "," + "password=" + password + "," + "role =" + role);
-                return AuthUser.ROLE.valueOf(role);
+                return role;
 
             } else {
                 return null;

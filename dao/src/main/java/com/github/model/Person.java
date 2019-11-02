@@ -1,39 +1,40 @@
 package com.github.model;
 
+import com.github.hib.entity.Role;
+
 import java.util.Objects;
 
-public class AuthUser {
-    private Long id;
+public class Person {
+    private Integer id;
     private String login;
     private String password;
-    private ROLE role;
+    private Role role;
 
-    public AuthUser(Long id, String login, String password, ROLE role) {
+    public Person(){}
+
+    public Person(Integer id, String login, String password, Role role) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
     }
 
-    public AuthUser( String login, String password, ROLE role) {
+    public Person(String login, String password, Role role) {
         this.login = login;
         this.password = password;
         this.role = role;
     }
 
-    public AuthUser (String login,String password){
+    public Person(String login, String password){
         this.login = login;
         this.password = password;
     }
-    public AuthUser() {
 
-    }
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -53,23 +54,20 @@ public class AuthUser {
         this.password = password;
     }
 
-    public ROLE getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(ROLE role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
-    public enum ROLE {
-        USER, ADMIN, UNKNOWN
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AuthUser user = (AuthUser) o;
+        Person user = (Person) o;
         return Objects.equals(id, user.id) && Objects.equals(login, user.login) && Objects.equals(password, user.password) && role == user.role;
     }
 
@@ -80,6 +78,6 @@ public class AuthUser {
 
     @Override
     public String toString() {
-        return "AuthUser{" + "id=" + id + ", login='" + login + '\'' + ", password='" + password + '\'' + ", role=" + role + '}';
+        return "Person{" + "id=" + id + ", login='" + login + '\'' + ", password='" + password + '\'' + ", role=" + role + '}';
     }
 }

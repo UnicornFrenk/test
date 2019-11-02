@@ -15,28 +15,27 @@ public class OneToManyTest {
 
 
         Session session = HibernateUtil.getSession();
-        Order order = new Order(3,2,300,new Address());
-        Person person = new Person( 88, "Sara121", "kkk", Role.USER);
-        person.getOrders().add(order);
-        session.beginTransaction();
+        CategoryEntity category = new CategoryEntity("fruits");
+        ItemEntity item = new ItemEntity(null, "pomme", "sweet", 200, 300, category);
+        category.getItems().add(item);
 
         EntityManager em = EntityManagerUtil.getEntityManager();
         em.getTransaction().begin();
-        em.persist(order);
+        em.persist(category);
         em.flush();
         em.getTransaction().commit();
 
         em = EntityManagerUtil.getEntityManager();
         em.getTransaction().begin();
-        order = em.find(Order.class, order.getId());
+        category = em.find(CategoryEntity.class, category.getIdCategory());
 
-        Order forDelete = person.getOrders().iterator().next();
+        ItemEntity itemForDel = category.getItems().iterator().next();
 
-        person.getOrders().remove(forDelete);
+        category.getItems().remove(itemForDel);
 //        forDelete.setDepartment(null);
         em.getTransaction().commit();
 
-        session.save(order);
+        session.save(item);
         session.getTransaction().commit();
         session.close();
     }

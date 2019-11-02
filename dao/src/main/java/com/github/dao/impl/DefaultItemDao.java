@@ -22,21 +22,6 @@ public class DefaultItemDao implements ItemDao {
         return DefaultItemDao.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    //private static volatile ItemDao instance;
-
-//    public static ItemDao getInstance() {
-//        ItemDao localInstance = instance;
-//        if (localInstance == null) {
-//            synchronized (ItemDao.class) {
-//                localInstance = instance;
-//                if (localInstance == null) {
-//                    instance = localInstance = new DefaultItemDao();
-//                }
-//            }
-//        }
-//        return localInstance;
-//    }
-
 
     private static final String createItem = "insert into item (item_name, item_description, item_quantity,item_category_id,price_for_one) values (?,?,?,?,?)";
 
