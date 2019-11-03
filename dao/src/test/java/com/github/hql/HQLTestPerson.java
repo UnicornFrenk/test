@@ -1,7 +1,9 @@
-package com.github.hib.dao;
+package com.github.hql;
 
+import com.github.hib.dao.impl.DefaultPersonDao;
 import com.github.hib.entity.*;
 import com.github.hib.util.EntityManagerUtil;
+import com.github.model.Person;
 import org.hibernate.CacheMode;
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
@@ -53,26 +55,25 @@ public class HQLTestPerson {
         public void selectPerson() {
             Session session = EntityManagerUtil.getSession();
             Query query = session.createQuery("select pd.userId, pd.city from PersonEntity as p left outer join PersonDetails as pd on p.id =pd.userId ");
-            // timeout - в milliseconds
             query.setTimeout(1000)
-                    // включить в кеш запросов
                     .setCacheable(true)
-                    // добавлять в кэш, но не считывать из него
                     .setCacheMode(CacheMode.REFRESH)
                     .setHibernateFlushMode(FlushMode.COMMIT);
-            // сущности и коллекции помечаюся как только для чтения
-            //.setReadOnly(true);
-
             System.out.println(query.list());
+
+            assertNotNull(query);
         }
 
     @Test
     public void selectPersonWhere() {
         Session session = EntityManagerUtil.getSession();
         Role role = USER;
+
         Query query = session.createQuery("from PersonEntity as p where p.role =:role");
         query.setParameter("role", role)
                 .getResultList().forEach(System.out::println);
+
+        assertNotNull(query);
     }
 
         @Test
@@ -89,79 +90,110 @@ public class HQLTestPerson {
         @Test
         public void selectAllLogin() {
             Session session = EntityManagerUtil.getSession();
+
             Query query = session.createQuery("select p.login from PersonEntity as p");
             final List<String> list = query.list();
             list.forEach(System.out::println);
+
+            assertNotNull(list);
         }
 
         @Test
         public void selectTestClauseObject() {
             Session session = EntityManagerUtil.getSession();
+
             Query query = session.createQuery("select p.login from PersonEntity as p");
             query.list().forEach(System.out::println);
+
+            assertNotNull(query);
         }
 
         @Test
         public void selectTestClauseObjectWhere() {
             Session session = EntityManagerUtil.getSession();
+
             Query query = session.createQuery("select p.login from PersonEntity as p where p.login= 'ADMIN'");
             query.list().forEach(System.out::println);
+
+            assertNotNull(query);
         }
 
         @Test
         public void orderByTest() {
             Session session = EntityManagerUtil.getSession();
+
             Query query = session.createQuery("from PersonEntity as p order by p.id desc");
             query.list().forEach(System.out::println);
+
+            assertNotNull(query);
         }
 
         @Test
         public void parameterTest() {
             Session session = EntityManagerUtil.getSession();
             String name = "user1";
-            // Query badQuery = session.createQuery("from Employee e where e.name = " + name);
+
             Query query = session.createQuery("from PersonEntity p where p.login = :name");
             query.setParameter("name", name)
-                    .getResultList().forEach(System.out::println);
+                    .getResultList()
+                    .forEach(System.out::println);
+
+            assertNotNull(query);
         }
 
         @Test
         public void parameterOrderTest() {
             Session session = EntityManagerUtil.getSession();
+
             Query query = session.createQuery(
                     "from PersonEntity p where p.login= ?0 and p.id > :id");
             query.setParameter(0, "User3")
                     .setParameter("id", 3)
                     .getResultList().forEach(System.out::println);
+
+            assertNotNull(query);
         }
 
         @Test
         public void parameterListTest() {
             Session session = EntityManagerUtil.getSession();
             final List<Integer> values = Arrays.asList(1, 4);
+
             Query query = session.createQuery("from PersonEntity p where p.id in (:ids)");
             query.setParameter("ids", values)
                     .getResultList().forEach(System.out::println);
+
+            assertNotNull(query);
         }
 
         @Test
         public void like() {
             Session session = EntityManagerUtil.getSession();
             String pattern = "use";
+
             Query query = session.createQuery("from PersonEntity p where p.login like :name order by p.login");
             query.setParameter("name", pattern +"%");
             System.out.println(query.list());
+
+            assertNotNull(query);
         }
 
         @Test
         public void updateEPerson() {
             Session session = EntityManagerUtil.getSession();
             session.beginTransaction();
-            session.createQuery("update PersonEntity p set p.password = :pass where login = :name")
+
+            Integer exp = session.createQuery("update PersonEntity p set p.password = :pass where login = :name")
                     .setParameter("name", "User4")
                     .setParameter("pass", "123")
                     .executeUpdate();
             session.getTransaction().commit();
+
+//            Person person = DefaultPersonDao.getInstance().getByLogin("User4");
+//            String pass = person.getPassword();
+//            String exp = "123";
+            assertNotNull(exp);
+//            System.out.println(exp + pass);
         }
 
     @Test

@@ -1,11 +1,11 @@
-package com.github.hib.dao;
+package com.github;
 
 import com.github.model.Category;
-import com.github.model.Item;
 
 import java.util.List;
 
-public interface CategoryDao {
+public interface CategoryService {
+
     Category createCategory(Category category);
 
     Category readCategory(String category_name);
@@ -13,6 +13,4 @@ public interface CategoryDao {
     void updateCategory(String name, int id);
     void deleteCategory(String name);
     List<Category> getAll();
-
-
 }

@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_Item", unique = true)
     private Integer id;
     @Column(name = "name")
     private String name;
@@ -46,4 +46,21 @@ public class ItemEntity {
     public void setCategory(CategoryEntity category) {
         this.category = category;
     }
+
+
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "item_booking", joinColumns = {@JoinColumn(name = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "id")}
+//    )
+//    private List<OrderEntity> orders = new ArrayList<>();
+//
+//    public List<OrderEntity> getOrders() {
+//        return orders;
+//    }
+//
+//    public void setOrders(List<OrderEntity> orders) {
+//        this.orders = orders;
+//    }
+
+
 }

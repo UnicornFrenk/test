@@ -16,7 +16,7 @@ public class OneToManyTest {
 
         Session session = HibernateUtil.getSession();
         CategoryEntity category = new CategoryEntity("fruits");
-        ItemEntity item = new ItemEntity(null, "pomme", "sweet", 200, 300, category);
+        ItemEntity item = new ItemEntity( "pomme", "sweet", 200, 300);
         category.getItems().add(item);
 
         EntityManager em = EntityManagerUtil.getEntityManager();

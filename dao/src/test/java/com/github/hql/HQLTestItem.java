@@ -1,4 +1,4 @@
-package com.github.hib.dao;
+package com.github.hql;
 
 import com.github.hib.entity.*;
 import com.github.hib.util.EntityManagerUtil;
@@ -117,10 +117,19 @@ public class HQLTestItem {
             System.out.println(query.list());
         }
 
-
+    @Test
+    public void updateItem() {
+        Session session = EntityManagerUtil.getSession();
+        session.beginTransaction();
+        session.createQuery("update ItemEntity i set i.price = :price where name = :name")
+                .setParameter("name", "apple")
+                .setParameter("price", 21)
+                .executeUpdate();
+        session.getTransaction().commit();
+    }
         @Test
         public void deleteItemTest() {
-            ItemEntity item = new ItemEntity(null,"look","look",300,300, null);
+            ItemEntity item = new ItemEntity("look","look",300,300);
             Session session = EntityManagerUtil.getSession();
             session.getTransaction().begin();
             session.persist(item);
@@ -129,6 +138,8 @@ public class HQLTestItem {
                     .executeUpdate();
             session.getTransaction().commit();
         }
+
+
 
         @Test
         public void maxPriceTest() {

@@ -1,11 +1,14 @@
 package com.github.hib.entity;
 
 
+import com.github.model.Item;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 //import java.util.ArrayList;
 //import java.util.List;
@@ -19,7 +22,7 @@ public class OrderEntity extends DateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_Order")
     private Integer id;
     @Column
     private Integer user_Id;
@@ -29,13 +32,8 @@ public class OrderEntity extends DateEntity {
     private Integer totalPrice;
     @Column
     private Address deliveryAddress;
-//    @OneToMany(cascade = CascadeType.PERSIST)
-//@ElementCollection(targetClass=Integer.class)
-//    private List<PersonEntity> persons = new ArrayList<>(0);
-
-//    @ManyToOne
-//    @JoinColumn(name = "USER_ID")
-//    private PersonEntity person;
+//    @ManyToMany(mappedBy = "item", cascade = CascadeType.ALL)
+//    private List<ItemEntity> itemList = new ArrayList<>();
 
 
     public OrderEntity(Integer user_Id, Integer item_id, Integer totalPrice, Address deliveryAddress) {
@@ -44,13 +42,14 @@ public class OrderEntity extends DateEntity {
         this.totalPrice = totalPrice;
         this.deliveryAddress = deliveryAddress;
     }
-//    public PersonEntity getPerson() {
-//        return person;
+
+//
+//    public List<ItemEntity> getItems() {
+//        return itemList;
 //    }
 //
-//    public void setPerson(PersonEntity person) {
-//        this.person = person;
+//    public void setItems(List<ItemEntity> items) {
+//        this.itemList = items;
 //    }
-
 
 }

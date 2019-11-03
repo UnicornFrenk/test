@@ -6,12 +6,11 @@ import com.github.model.Item;
 import java.util.List;
 
 public interface ItemDao {
-    Item createItem(ItemEntity item);
+    Item createItem(Item item);
 
     Item readItem(String item_name);
-
-    int updateItem(String name, int category);
-    int deleteItem(String name);
+    void updateItem(Integer price, String name);
+    void deleteItem(String name);
     List<Item> getAll();
 
 

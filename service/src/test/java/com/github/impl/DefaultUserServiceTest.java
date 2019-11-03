@@ -1,0 +1,153 @@
+package com.github.impl;
+
+
+import com.github.hib.dao.PersonDao;
+import com.github.hib.entity.Role;
+import com.github.model.Person;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.github.hib.entity.Role.USER;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
+
+
+@ExtendWith(MockitoExtension.class)
+
+@MockitoSettings(strictness = Strictness.LENIENT)
+public class DefaultUserServiceTest {
+
+    @Mock
+    PersonDao dao;
+
+    @InjectMocks
+    DefaultSecurityService service;
+
+    @InjectMocks
+    DefaultPersonService personService;
+
+    @Test
+    public void getInstance() {
+        service.getInstance();
+    }
+
+    @Test
+    public void testLoginNotExist() {
+        when(dao.getByLogin("ADMIN")).thenReturn(null);
+
+        Person login = service.userName("ADMIN", "ADMIN");
+
+        assertNull(login);
+    }
+
+    @Test
+    public void testLoginCorrect() {
+        when(dao.getByLogin("admin")).thenReturn(new Person(null, "admin", "pass", null));
+
+        Person userFromDb = service.userName("admin", "pass");
+
+        assertNotNull(userFromDb);
+        assertEquals(userFromDb.getLogin(), "admin");
+        assertNotNull(userFromDb.getPassword(), "pass");
+    }
+
+    @Test
+    public void testLoginWrongPass() {
+        when(dao.getByLogin("admin")).thenReturn(new Person(null, "admin", "pass", null));
+        Person login = personService.getByLogin("admin");
+        assertNull(login);
+    }
+
+
+    @Test //create
+    public void createUserTest() {
+        Person user1 = new Person(null, "admin", "pass", USER);
+        dao.createPerson(user1);
+        Integer real = user1.getId();
+        Integer exp = 1;
+        assertNotNull(user1);
+        assertEquals(exp, real);
+
+    }
+
+    @Test
+    public void getAllTest() {
+        when(dao.getAll()).thenReturn(new ArrayList<Person>());
+        List<Person> personList = personService.getAll();
+        assertNotNull(personList);
+    }
+
+    @Test
+    public void getAllPersonsTest() {
+        when(dao.getPersons()).thenReturn(new ArrayList<Person>());
+        List<Person> personList = dao.getPersons();
+        assertNotNull(personList);
+    }
+
+    @Test
+    public void getRoleTest() {
+
+        Person person = new Person("null","null",USER);
+        when(dao.getByLogin("null")).thenReturn(person);
+
+        Role personFromDb = dao.getByLogin("null").getRole();
+        Role expRole = USER;
+         assertNotNull(personFromDb);
+        assertEquals(expRole,personFromDb);
+    }
+
+    @Test
+    public void updateUserTest(){
+        doNothing().when(dao).updatePerson(any(), any());
+
+        personService.updatePerson("user1", "4321");
+
+        verify(dao).updatePerson("user1", "4321");
+    }
+
+    @Test
+    public void deleteUserTest() {
+        when(dao.getByLogin("us")).thenReturn(null);
+
+        dao.deletePerson("us");
+
+        Person id = dao.getByLogin("us");
+
+        assertNull(id);
+    }
+
+    @Test
+    public void getByRoleTest() {
+
+        Person person = new Person("null","null",USER);
+        when(dao.getByRole(USER)).thenReturn(person);
+
+        Role personFromDb = dao.getByLogin("null").getRole();
+        Role expRole = USER;
+        assertNotNull(personFromDb);
+        assertEquals(expRole,personFromDb);
+    }
+
+    @Test
+    public void getByLoginRoTest() {
+
+        Person person = new Person("null","null",USER);
+        when(dao.getByLogin("null")).thenReturn(person);
+
+        Person personByLogin = dao.getByLogin("null");
+
+        assertNotNull(personByLogin);
+    }
+
+}

@@ -8,6 +8,7 @@
         </plugins>
     </build>
 
+
     <parent>
         <groupId>it.academy</groupId>
         <artifactId>smarty</artifactId>
@@ -15,29 +16,29 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>daomodule</artifactId>
+    <artifactId>servisemodule</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>daomodule</name>
-    <properties>
-        <hibernate.version>5.4.6.Final</hibernate.version>
-</properties>
+    <name>servise</name>
+
     <dependencies>
         <dependency>
-            <groupId>com.mchange</groupId>
-            <artifactId>c3p0</artifactId>
-            <version>0.9.5.4</version>
+            <groupId>it.academy</groupId>
+            <artifactId>smarty</artifactId>
+            <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.17</version>
+            <groupId>com.wesleyhome.jpa</groupId>
+            <artifactId>criteria-query-annotations</artifactId>
+            <version>1.0.2</version>
         </dependency>
+
         <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>3.0.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -52,10 +53,14 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.hql</groupId>
-            <artifactId>hibernate-hql-parser</artifactId>
-            <version>1.5.0.Final</version>
+            <groupId>it.academy</groupId>
+            <artifactId>daomodule</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
-
     </dependencies>
+
+
+
+
 </project>

@@ -1,4 +1,4 @@
-package com.github.hib.dao;
+package com.github.hql;
 
 import com.github.hib.entity.*;
 import com.github.hib.util.EntityManagerUtil;

@@ -3,11 +3,14 @@ package com.github.hib.dao.impl;
 import com.github.hib.dao.ItemDao;
 import com.github.hib.dao.converters.ItemConverter;
 import com.github.hib.entity.ItemEntity;
+import com.github.hib.util.EntityManagerUtil;
 import com.github.hib.util.HibernateUtil;
 import com.github.model.Item;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.NoResultException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,28 +28,60 @@ public class DefaultItemDao  implements ItemDao {
 
 
     @Override
-    public Item createItem(ItemEntity item) {
+    public Item createItem(Item item) {
         return null;
     }
 
     @Override
     public Item readItem(String item_name) {
-        return null;
+        ItemEntity iEntity;
+        try {
+            iEntity = (ItemEntity) HibernateUtil
+                    .getSession()
+                    .createQuery("from ItemEntity i where i.name = :name")
+                    .setParameter("name", item_name)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            log.info("item not found by name{}", item_name);
+            iEntity = null;
+        }
+        return ItemConverter.fromEntity(iEntity);
     }
 
-    @Override
-    public int updateItem(String name, int category) {
-        return 0;
-    }
 
     @Override
-    public int deleteItem(String name) {
-        return 0;
+    public void updateItem(Integer price, String name) {
+
+        try {
+            Session session = EntityManagerUtil.getSession();
+            session.beginTransaction();
+            session.createQuery("update ItemEntity i set i.price = :price where i.name = :name")
+                    .setParameter("price", 30)
+                    .setParameter("name",name)
+                    .executeUpdate();
+            session.getTransaction().commit();
+        } catch (NoResultException e) {
+            log.info("not found item{}", price);
+        }
+    }
+
+
+    @Override
+    public void deleteItem(String name) {
+
+        try {
+           HibernateUtil.getSession()
+                    .createQuery("delete from ItemEntity i where i.name = :name")
+                    .setParameter("name", name);
+        } catch (NoResultException e) {
+            log.info("item not found by name{}", name);
+        }
     }
 
     @Override
     public List<Item> getAll() {
-        final List<ItemEntity> authUser = HibernateUtil.getSession().createQuery("from ItemEntity ")
+        final List<ItemEntity> authUser = HibernateUtil.getSession()
+                .createQuery("from ItemEntity ")
                 .list();
         return authUser.stream()
                 .map(ItemConverter::fromEntity)

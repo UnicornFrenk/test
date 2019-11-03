@@ -24,7 +24,6 @@ public class CategoryEntity {
     private String nameCategory;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<ItemEntity> items = new ArrayList<>();
 
     public CategoryEntity(String nameCategory) {

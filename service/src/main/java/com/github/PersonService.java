@@ -1,13 +1,11 @@
-package com.github.hib.dao;
+package com.github;
 
 import com.github.hib.entity.Role;
 import com.github.model.Person;
 
 import java.util.List;
 
-public interface PersonDao {
-
-
+public interface PersonService {
     int createPerson(Person person);
 
     Person getByLogin(String login);
@@ -15,6 +13,6 @@ public interface PersonDao {
 
     void updatePerson(String login, String pass);
     void deletePerson(String login);
-    List<Person> getPersons();
+     List<Person> getPersons();
     List<Person> getAll();
 }

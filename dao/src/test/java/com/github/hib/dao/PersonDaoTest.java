@@ -1,6 +1,5 @@
 package com.github.hib.dao;
 
-import com.github.hib.dao.impl.DefaultPersonDao;
 import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.Role;
 import com.github.hib.util.HibernateUtil;
@@ -37,7 +36,7 @@ public class PersonDaoTest {
         final PersonEntity person = savePerson();
         Session session = HibernateUtil.getSession();
         session.beginTransaction();
-        person.setLogin("Ad");
+        person.setPassword("Ad");
         session.saveOrUpdate(person);
         session.getTransaction().commit();
         session.close();

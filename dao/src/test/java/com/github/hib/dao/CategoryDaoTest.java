@@ -4,7 +4,6 @@ import com.github.hib.dao.converters.CategoryConverter;
 import com.github.hib.dao.impl.DefaultCategoryDao;
 import com.github.hib.entity.CategoryEntity;
 import com.github.hib.util.HibernateUtil;
-import com.github.model.Category;
 import org.hibernate.Session;
 import org.junit.jupiter.api.Test;
 public class CategoryDaoTest {

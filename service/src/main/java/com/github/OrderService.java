@@ -1,11 +1,11 @@
-package com.github.hib.dao;
+package com.github;
 
 import com.github.hib.entity.Address;
 import com.github.model.Order;
 
 import java.util.List;
 
-public interface OrderDao {
+public interface OrderService {
 
     Integer createOrder(Order order);
 
