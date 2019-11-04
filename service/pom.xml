@@ -16,10 +16,10 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>servisemodule</artifactId>
+    <artifactId>servicemodule</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>servise</name>
+    <name>servicemodule</name>
 
     <dependencies>
         <dependency>
