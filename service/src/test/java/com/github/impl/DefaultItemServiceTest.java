@@ -1,7 +1,8 @@
 package com.github.impl;
 
 import com.github.hib.dao.ItemDao;
-import com.github.hib.entity.*;
+import com.github.hib.dao.impl.DefaultItemDao;
+import com.github.hib.entity.ItemEntity;
 import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Item;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,9 +18,7 @@ import javax.persistence.EntityManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
@@ -35,25 +34,6 @@ public class DefaultItemServiceTest {
     @InjectMocks
     DefaultItemService service;
 
-
-    @BeforeAll
-    static public void initialization() {
-
-        EntityManager em = EntityManagerUtil.getEntityManager();
-        em.getTransaction().begin();
-
-        em.persist(new ItemEntity("apple", "apple", 5, 5));
-        em.persist(new ItemEntity("nuts", "nuts", 5, 5));
-        em.persist(new ItemEntity("apple1", "apple", 52, 5));
-        em.persist(new ItemEntity("apple2", "apple", 52, 5));
-        em.persist(new ItemEntity("apple3", "apple", 5, 5));
-        em.persist(new ItemEntity("apple4", "apple", 5, 5));
-        em.persist(new ItemEntity("apple5", "apple", 5, 5));
-
-        em.getTransaction().commit();
-        em.clear();
-        em.close();
-    }
 
     @Test
     public void getInstance() {
@@ -74,12 +54,10 @@ public class DefaultItemServiceTest {
     @Test
     public void testPriceCorrect() {    //todo
 
-        when(dao.readItem("apple")).thenReturn(new Item("apple", "apple", 300, 20));
+        when(dao.readItem("apple")).thenReturn(new Item());
 
         Item itemFromDb = dao.readItem("apple");
-        Integer expPrice = 20;
         assertNotNull(itemFromDb);
-        assertEquals(expPrice, itemFromDb.getPriceForOne());
 
     }
 
@@ -87,30 +65,23 @@ public class DefaultItemServiceTest {
     @Test
     public void createItemTest() {
         Item item = new Item("nuts", "nuts", 1000, 500);
-        dao.createItem(item);
-        String real = item.getItemName();
-        String exp = "nuts";
-        assertEquals(exp, real);
+        when(dao.createItem(item)).thenReturn(item);
 
-//        Item item1 = new Item("nuts", "nuts", 1000, 500);
-//        Item item2 = new Item("nuts", "nuts", 1000, 500);;
-//        when(dao.createItem(item1)).thenReturn(item2);
-//
-//        Item itemFromDb = service.readItem("nuts");
-//
-//        assertEquals(item2.getItemName(),itemFromDb.getItemName());
+        Item itemFromDb = service.createItem(item);
+
+        assertNotNull(itemFromDb);
+        assertEquals(item.getItemName(), itemFromDb.getItemName());
     }
 
 
     @Test
     public void readItemTest() {
+        when(dao.readItem("apple")).thenReturn(new Item("apple", null, null, null));
 
-        when(dao.readItem("apple")).thenReturn(new Item("apple", "apple", 300, 20));
+        Item itemFromDb = service.readItem("apple");
 
-        Item itemFromDb = dao.readItem("apple");
-        String expName = "apple";
-        // assertNotNull(itemFromDb);
-        assertEquals(expName, itemFromDb.getItemName());
+        assertNotNull(itemFromDb);
+        assertEquals("apple", itemFromDb.getItemName());
     }
 
     @Test
@@ -119,7 +90,8 @@ public class DefaultItemServiceTest {
         doNothing().when(dao).updateItem(anyInt(), anyString());
         service.updateItem(1, "apple");
 
-        verify(dao).updateItem(1, "apple");}
+        verify(dao).updateItem(1, "apple");
+    }
 
     @Test
     public void deleteItemTest() {

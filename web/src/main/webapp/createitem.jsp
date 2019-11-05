@@ -20,7 +20,6 @@
             <td>Name</td>
             <td>Description</td>
             <td>Total Quantity</td>
-            <td>CategoryId</td>
             <td>Price For One</td>
 
 
@@ -29,7 +28,6 @@
             <td><input type="text" name="item_name" value="${item.itemName}"></td>
             <td><input type="text" name="item_description" value="${item.itemDescription}"></td>
             <td><input type="text" name="item_quantity" value="${item.itemQuantity}"></td>
-            <td><input type="text" name="item_category_id" value="${item.itemCategoryId}"></td>
             <td><input type="text" name="price_for_one" value="${item.priceForOne}"></td>
 
         </tr>

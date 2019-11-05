@@ -31,7 +31,6 @@ public class DefaultItemService implements ItemService {
 
     @Override
     public Item readItem(String item_name) {
-
         return itemDao
                 .readItem(item_name);
     }

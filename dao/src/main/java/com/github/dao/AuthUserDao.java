@@ -1,6 +1,7 @@
 package com.github.dao;
 
 
+import com.github.hib.entity.Role;
 import com.github.model.Person;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface AuthUserDao {
 
     List<Person> getAll();
 
-    String  getRole(String login, String password);
+    Role getRole(String login, String password);
 
     Person create(Person authUser);
 

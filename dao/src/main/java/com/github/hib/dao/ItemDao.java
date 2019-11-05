@@ -1,6 +1,5 @@
 package com.github.hib.dao;
 
-import com.github.hib.entity.ItemEntity;
 import com.github.model.Item;
 
 import java.util.List;

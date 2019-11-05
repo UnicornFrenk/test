@@ -7,6 +7,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Create order </title>
@@ -19,7 +20,6 @@
         <td>Name</td>
         <td>Description</td>
         <td>Total Quantity</td>
-        <td>CategoryId</td>
         <td>Price For One</td>
 
     </tr>
@@ -29,7 +29,6 @@
             <td>${item.itemName}</td>
             <td>${item.itemDescription}</td>
             <td>${item.itemQuantity}</td>
-            <td>${item.itemCategoryId}</td>
             <td>${item.priceForOne}</td>
         </tr>
     </c:forEach>

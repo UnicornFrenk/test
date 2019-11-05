@@ -83,7 +83,7 @@ public class PersonTest {
         CriteriaQuery<PersonEntity> criteria = cb.createQuery(PersonEntity.class);
         Root<PersonEntity> personRoot = criteria.from(PersonEntity.class);
         criteria.select(personRoot)
-                .where(cb.equal(personRoot.get(String.valueOf(USER)), USER));
+                .where(cb.equal(personRoot.get("role"), USER));
         List<PersonEntity> personList = em.createQuery(criteria).getResultList();
         personList.forEach(System.out::println);
 

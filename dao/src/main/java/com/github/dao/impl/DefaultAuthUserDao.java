@@ -133,7 +133,7 @@ public class DefaultAuthUserDao implements AuthUserDao {
     }
 
     @Override
-    public String getRole(String login, String password) {
+    public Role getRole(String login, String password) {
         try (Connection connection = JDBCConnection.connect(); PreparedStatement preparedStatement = connection.prepareStatement(getRole)) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
@@ -143,7 +143,7 @@ public class DefaultAuthUserDao implements AuthUserDao {
                 String role = resultSet.getString("role");
                 System.out.println(Person.class.toString());
                 System.out.println("id=" + id + "," + "login=" + login + "," + "password=" + password + "," + "role =" + role);
-                return role;
+                return Role.valueOf(role);
 
             } else {
                 return null;

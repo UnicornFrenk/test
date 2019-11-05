@@ -7,15 +7,10 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <class>com.github.hib.entity.PersonEntity</class>
         <class>com.github.hib.entity.ItemEntity</class>
-        <class>com.github.hib.entity.OrderEntity</class>
+        <class>com.github.hib.entity.BookingEntity</class>
         <class>com.github.hib.entity.CategoryEntity</class>
         <class>com.github.hib.entity.PersonDetails</class>
         <class>com.github.hib.entity.Address</class>
-        <class>com.github.hib.entity.DateEntity</class>
-        <class>com.github.hib.entity.Role</class>
-        <class>com.github.hib.entity.BlackListUser</class>
-        <class>com.github.hib.entity.GoodUser</class>
-        <class>com.github.hib.entity.Status</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
@@ -31,6 +26,13 @@
             <property name="hibernate.use_sql_comments" value="true"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.connection.pool_size" value="10"/>
+
+            <property name="hibernate.cache.region.factory_class"
+                      value="org.hibernate.cache.ehcache.EhCacheRegionFactory"/>
+            <property name="hibernate.cache.use_second_level_cache" value="true"/>
+            <property name="hibernate.cache.use_query_cache" value="true"/>
+            <property name="hibernate.cache.auto_evict_collection_cache" value="true"/>
+            <property name="net.sf.ehcache.configurationResourceName" value="ehcache.xml"/>
         </properties>
     </persistence-unit>
 

@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Registration Form</title>
@@ -7,16 +8,19 @@
 <body>
 <h1>Hi, new User!</h1>
 
-<form method="post" action="${pageContext.request.contextPath}/registration">
+<!--не через форич???? todo-->
 
+
+
+
+<c:forEach var="user" items="users"/>
+<form method="post" action="${pageContext.request.contextPath}/registration">
 <table>
-    <tr>
-        <td>Введите имя пользователя:</td>
-        <td><input type="text" required placeholder="login"  name="login"><br></td>
+    <tr><td>Введите имя пользователя:</td>
+        <td><input type="text"  name="login" value="${users.login}"><br></td>
     </tr>
-    <tr>
-        <td>Введите пароль:</td>
-        <td><input type="password" required placeholder="password" name="password"><br></td>
+    <tr><td>Введите пароль:</td>
+        <td><input type="password" name="password" value="${users.password}"><br></td>
     </tr>
 
     <tr>

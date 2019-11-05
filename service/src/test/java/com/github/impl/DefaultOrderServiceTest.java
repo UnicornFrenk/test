@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -45,12 +44,12 @@ public class DefaultOrderServiceTest {
 
     @Test
     public void readOrderTest() {
-        Order order = new Order(1,null,null,null,null);
+        Order order = new Order(1, null, null, null, null);
         when(dao.readOrder(1)).thenReturn(order);
 
         Integer orderFromDb = dao.readOrder(1).getId();
         Integer expName = 1;
-       // assertNotNull(orderFromDb);
+        // assertNotNull(orderFromDb);
         assertEquals(expName, orderFromDb);
     }
 
@@ -60,17 +59,8 @@ public class DefaultOrderServiceTest {
         doNothing().when(dao).updateOrder(anyInt(), any());
         service.updateOrder(1, new Address());
 
-        verify(dao).updateOrder(1, new Address());}
-
-    @Test
-    public void createOrderTest() {
-        Order order = new Order(null,2,null,null,null);
-        service.getInstance().createOrder(order);
-        Integer orderFromDb = order.getUser_Id();
-        Integer exp = 2;
-        assertEquals(exp, orderFromDb);
+        verify(dao).updateOrder(1, new Address());
     }
-
 
 
     @Test
@@ -92,7 +82,6 @@ public class DefaultOrderServiceTest {
 
         assertNotNull(orders);
     }
-
 
 
 }

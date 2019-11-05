@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -65,20 +66,10 @@ public class DefaultUserServiceTest {
     @Test
     public void testLoginWrongPass() {
         when(dao.getByLogin("admin")).thenReturn(new Person(null, "admin", "pass", null));
+
         Person login = personService.getByLogin("admin");
-        assertNull(login);
-    }
 
-
-    @Test //create
-    public void createUserTest() {
-        Person user1 = new Person(null, "admin", "pass", USER);
-        dao.createPerson(user1);
-        Integer real = user1.getId();
-        Integer exp = 1;
-        assertNotNull(user1);
-        assertEquals(exp, real);
-
+        assertNotNull(login);
     }
 
     @Test
@@ -98,17 +89,17 @@ public class DefaultUserServiceTest {
     @Test
     public void getRoleTest() {
 
-        Person person = new Person("null","null",USER);
+        Person person = new Person("null", "null", USER);
         when(dao.getByLogin("null")).thenReturn(person);
 
         Role personFromDb = dao.getByLogin("null").getRole();
         Role expRole = USER;
-         assertNotNull(personFromDb);
-        assertEquals(expRole,personFromDb);
+        assertNotNull(personFromDb);
+        assertEquals(expRole, personFromDb);
     }
 
     @Test
-    public void updateUserTest(){
+    public void updateUserTest() {
         doNothing().when(dao).updatePerson(any(), any());
 
         personService.updatePerson("user1", "4321");
@@ -129,23 +120,21 @@ public class DefaultUserServiceTest {
 
     @Test
     public void getByRoleTest() {
-
-        Person person = new Person("null","null",USER);
+        Person person = new Person("null", "null", USER);
         when(dao.getByRole(USER)).thenReturn(person);
 
-        Role personFromDb = dao.getByLogin("null").getRole();
-        Role expRole = USER;
+        Role personFromDb = personService.getByRole(USER).getRole();
+
         assertNotNull(personFromDb);
-        assertEquals(expRole,personFromDb);
+        assertEquals(USER, personFromDb);
     }
 
     @Test
     public void getByLoginRoTest() {
-
-        Person person = new Person("null","null",USER);
+        Person person = new Person("null", "null", USER);
         when(dao.getByLogin("null")).thenReturn(person);
 
-        Person personByLogin = dao.getByLogin("null");
+        Person personByLogin = personService.getByLogin("null");
 
         assertNotNull(personByLogin);
     }

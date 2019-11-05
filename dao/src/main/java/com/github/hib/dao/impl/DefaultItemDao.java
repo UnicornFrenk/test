@@ -2,7 +2,9 @@ package com.github.hib.dao.impl;
 
 import com.github.hib.dao.ItemDao;
 import com.github.hib.dao.converters.ItemConverter;
+import com.github.hib.dao.converters.PersonConverter;
 import com.github.hib.entity.ItemEntity;
+import com.github.hib.entity.PersonEntity;
 import com.github.hib.util.EntityManagerUtil;
 import com.github.hib.util.HibernateUtil;
 import com.github.model.Item;
@@ -29,7 +31,12 @@ public class DefaultItemDao  implements ItemDao {
 
     @Override
     public Item createItem(Item item) {
-        return null;
+        ItemEntity iEntity = ItemConverter.toEntity(item);
+        final Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        session.save(iEntity);
+        session.getTransaction().commit();
+        return ItemConverter.fromEntity(iEntity);
     }
 
     @Override

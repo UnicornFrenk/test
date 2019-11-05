@@ -1,12 +1,9 @@
 package com.github.hib.dao.impl;
 
-import com.github.hib.dao.CategoryDao;
 import com.github.hib.dao.OrderDao;
-import com.github.hib.dao.converters.OrderConverter;
-import com.github.hib.dao.converters.PersonConverter;
+import com.github.hib.dao.converters.BookingConverter;
 import com.github.hib.entity.Address;
-import com.github.hib.entity.OrderEntity;
-import com.github.hib.entity.PersonEntity;
+import com.github.hib.entity.BookingEntity;
 import com.github.hib.util.HibernateUtil;
 import com.github.model.Order;
 import org.hibernate.Session;
@@ -33,7 +30,7 @@ public class DefaultOrderDao implements OrderDao {
 
     @Override
     public Integer createOrder(Order order) {
-        OrderEntity oEntity = OrderConverter.toEntity(order);
+        BookingEntity oEntity = BookingConverter.toEntity(order);
         final Session session = HibernateUtil.getSession();
         session.beginTransaction();
         session.save(oEntity);
@@ -43,34 +40,34 @@ public class DefaultOrderDao implements OrderDao {
 
     @Override
     public Order readOrder(int id) {
-        OrderEntity oEntity;
+        BookingEntity oEntity;
         try {
-            oEntity = (OrderEntity) HibernateUtil
+            oEntity = (BookingEntity) HibernateUtil
                     .getSession()
-                    .createQuery("from OrderEntity o where o.id = :id")
+                    .createQuery("from BookingEntity o where o.id = :id")
                     .setParameter("id", id)
                     .getSingleResult();
         } catch (NoResultException e) {
             log.info("order not found by id{}", id);
             oEntity = null;
         }
-        return OrderConverter.fromEntity(oEntity);
+        return BookingConverter.fromEntity(oEntity);
     }
 
     @Override
     public Order getOrderByPersonLogin(String login) {
-        OrderEntity oEntity;
+        BookingEntity oEntity;
         try {
-            oEntity = (OrderEntity) HibernateUtil
+            oEntity = (BookingEntity) HibernateUtil
                     .getSession()
-                    .createQuery("from OrderEntity o join PersonEntity p on p.id=o.user_Id where p.login = :login")
+                    .createQuery("from BookingEntity o join PersonEntity p on p.id=o.user_Id where p.login = :login")
                     .setParameter("login", login)
                     .getSingleResult();
         } catch (NoResultException e) {
             log.info("person not found by login{}", login);
             oEntity = null;
         }
-        return OrderConverter.fromEntity(oEntity);
+        return BookingConverter.fromEntity(oEntity);
     }
 
     @Override
@@ -78,7 +75,7 @@ public class DefaultOrderDao implements OrderDao {
         try {
          HibernateUtil
                     .getSession()
-                    .createQuery("update OrderEntity o set o.deliveryAddress = :address where o.user_Id = :id")
+                    .createQuery("update BookingEntity o set o.deliveryAddress = :address where o.user_Id = :id")
                     .setParameter("id", id)
                     .setParameter("address", address)
                     .executeUpdate();
@@ -92,7 +89,7 @@ public class DefaultOrderDao implements OrderDao {
         try {
              HibernateUtil
                     .getSession()
-                    .createQuery("delete from OrderEntity o where o.id = :id")
+                    .createQuery("delete from BookingEntity o where o.id = :id")
                     .setParameter("id", id).executeUpdate();
         } catch (NoResultException e) {
             log.info("order not found by id{}", id);
@@ -101,12 +98,12 @@ public class DefaultOrderDao implements OrderDao {
 
     @Override
     public List<Order> getAll() {
-        final List<OrderEntity> orders = HibernateUtil
+        final List<BookingEntity> orders = HibernateUtil
                 .getSession()
-                .createQuery("from OrderEntity ")
+                .createQuery("from BookingEntity ")
                 .list();
         return orders.stream()
-                .map(OrderConverter::fromEntity)
+                .map(BookingConverter::fromEntity)
                 .collect(Collectors.toList());
     }
 }

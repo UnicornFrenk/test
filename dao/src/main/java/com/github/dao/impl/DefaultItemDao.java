@@ -37,10 +37,10 @@ public class DefaultItemDao implements ItemDao {
             preparedStatement.setLong(5, item.getPriceForOne());
             boolean isSuccess = preparedStatement.executeUpdate() > 0;
             if (isSuccess) {
-                long id;
+                Integer id;
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     generatedKeys.next();
-                    id = generatedKeys.getLong(1);
+                    id = generatedKeys.getInt(1);
                 }
                 item.setId(id);
                 return item;
@@ -61,11 +61,11 @@ public class DefaultItemDao implements ItemDao {
             preparedStatement.setString(1, itemName);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    long id = resultSet.getLong("item_id");
+                    Integer id = resultSet.getInt("item_id");
                     String description = resultSet.getString("item_description");
-                    Long quantity = resultSet.getLong("item_quantity");
+                    Integer quantity = resultSet.getInt("item_quantity");
                     int categoryId = resultSet.getInt("item_category_id");
-                    Long price = resultSet.getLong("price_for_one");
+                    Integer price = resultSet.getInt("price_for_one");
                     return new Item(id, itemName, description, quantity, categoryId, price);
                 } else {
                     return null;
@@ -110,12 +110,12 @@ public class DefaultItemDao implements ItemDao {
 
     private Item itemEntity(ResultSet rs) throws SQLException {
         Item itemEntity = new Item();
-        itemEntity.setId(rs.getLong("item_id"));
+        itemEntity.setId(rs.getInt("item_id"));
         itemEntity.setItemName(rs.getString("item_name"));
         itemEntity.setItemDescription(rs.getString("item_description"));
-        itemEntity.setItemQuantity(rs.getLong("item_quantity"));
+        itemEntity.setItemQuantity(rs.getInt("item_quantity"));
         itemEntity.setItemCategoryId(rs.getInt("item_category_id"));
-        itemEntity.setPriceForOne(rs.getLong("price_for_one"));
+        itemEntity.setPriceForOne(rs.getInt("price_for_one"));
         return itemEntity;
     }
 

@@ -10,7 +10,7 @@
 
     <parent>
         <groupId>it.academy</groupId>
-        <artifactId>smarty</artifactId>
+        <artifactId>smart</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
@@ -19,9 +19,13 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>daomodule</name>
+
     <properties>
         <hibernate.version>5.4.6.Final</hibernate.version>
-</properties>
+        <hibernate-core.version>5.4.5.Final</hibernate-core.version>
+        <ehcache.version>2.6.11</ehcache.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.mchange</groupId>
@@ -30,21 +34,39 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-ehcache</artifactId>
+            <version>${hibernate-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-core</artifactId>
+            <version>${ehcache.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.199</version>
+        </dependency>
+        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.17</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>${hibernate.version}</version>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate-core.version}</version>
         </dependency>
+
+         <!--todo delete-->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -52,9 +74,15 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.hql</groupId>
-            <artifactId>hibernate-hql-parser</artifactId>
-            <version>1.5.0.Final</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.12.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.0-alpha1</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

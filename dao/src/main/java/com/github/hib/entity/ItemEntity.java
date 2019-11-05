@@ -1,11 +1,11 @@
 package com.github.hib.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_Item", unique = true)
+    @Column(name = "id", unique = true)
     private Integer id;
     @Column(name = "name")
     private String name;
@@ -27,6 +27,15 @@ public class ItemEntity {
     private Integer price;
 
 
+    public ItemEntity(Integer id, String name, String description, Integer quantity, Integer price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.quantity = quantity;
+        this.price = price;
+
+    }
+
     public ItemEntity(String name, String description, Integer quantity, Integer price) {
         this.name = name;
         this.description = description;
@@ -36,7 +45,7 @@ public class ItemEntity {
     }
 
     @ManyToOne
-    @JoinColumn(name = "categoryId", insertable=false, updatable=false)
+    @JoinColumn(name = "category_Id", insertable=false, updatable=false)
     private CategoryEntity category;
 
     public CategoryEntity getCategory() {
@@ -48,19 +57,22 @@ public class ItemEntity {
     }
 
 
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "item_booking", joinColumns = {@JoinColumn(name = "id")},
-//            inverseJoinColumns = {@JoinColumn(name = "id")}
-//    )
-//    private List<OrderEntity> orders = new ArrayList<>();
-//
-//    public List<OrderEntity> getOrders() {
-//        return orders;
-//    }
-//
-//    public void setOrders(List<OrderEntity> orders) {
-//        this.orders = orders;
-//    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "booking_item", joinColumns = {@JoinColumn(name = "item_id")},
+            inverseJoinColumns = {@JoinColumn(name = "booking_id")}
+    )
+    private List<BookingEntity> orders = new ArrayList<>();
 
+    public List<BookingEntity> getOrders() {
+        return orders;
+    }
 
+    public void setOrders(List<BookingEntity> orders) {
+        this.orders = orders;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemEntity{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", quantity=" + quantity + ", price=" + price + ", category=" + category + '}';
+    }
 }

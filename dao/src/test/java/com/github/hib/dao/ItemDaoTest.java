@@ -1,10 +1,12 @@
 package com.github.hib.dao;
 
+import com.github.hib.dao.converters.ItemConverter;
 import com.github.hib.dao.impl.DefaultItemDao;
 import com.github.hib.entity.ItemEntity;
 import com.github.hib.util.HibernateUtil;
 import com.github.model.Item;
 import org.hibernate.Session;
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 
@@ -12,9 +14,8 @@ public class ItemDaoTest {
 
     @Test
     public void testSave() {
-        Item testItem = new Item("pomme", "pomme",3,200);
-        ItemDao iDao = new DefaultItemDao();
-        iDao.createItem(testItem);
+        ItemEntity testItem = new ItemEntity("pomme", "pomme",3,200);
+        Assert.assertNotNull(testItem);
     }
 
     @Test
@@ -25,6 +26,7 @@ public class ItemDaoTest {
         session.beginTransaction();
         session.save(order);
         session.getTransaction().commit();
+        Assert.assertNotNull(order);
         session.close();
 
     }
@@ -37,18 +39,17 @@ public class ItemDaoTest {
         item.getDescription();
         session.saveOrUpdate(item);
         session.getTransaction().commit();
+        Assert.assertNotNull(item);
         session.close();
     }
 
     @Test
     public void deleteSession() {
-        ItemEntity item = saveItem();
-        Session session = HibernateUtil.getSession();
-        session.beginTransaction();
-        item = session.get(ItemEntity.class, item.getId());
-        session.delete(item);
-        session.getTransaction().commit();
-        session.close();
+        ItemEntity testItem = new ItemEntity(1, "pomme", "pomme",3,200);
+        System.out.println(testItem.toString());
+        DefaultItemDao.getInstance().deleteItem(testItem.getName());
+
+        Assert.assertNull(testItem);
     }
 
     @Test
@@ -58,6 +59,7 @@ public class ItemDaoTest {
         session.beginTransaction();
         session.get(ItemEntity.class, itemEntity.getId());
         session.getTransaction().commit();
+        Assert.assertNotNull(itemEntity);
         session.close();
     }
 
