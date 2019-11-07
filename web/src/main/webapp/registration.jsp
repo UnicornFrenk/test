@@ -8,11 +8,6 @@
 <body>
 <h1>Hi, new User!</h1>
 
-<!--не через форич???? todo-->
-
-
-
-
 <c:forEach var="user" items="users"/>
 <form method="post" action="${pageContext.request.contextPath}/registration">
 <table>

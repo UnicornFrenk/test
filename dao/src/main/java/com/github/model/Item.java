@@ -14,12 +14,11 @@ public class Item {
     private Integer priceForOne;
     public Item(){}
 
-    public Item(Integer id, String itemName, String itemDescription, Integer itemQuantity, Integer itemCategoryId, Integer priceForOne) {
+    public Item(Integer id, String itemName, String itemDescription, Integer itemQuantity, Integer priceForOne) {
         this.id = id;
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemQuantity = itemQuantity;
-        this.itemCategoryId = itemCategoryId;
         this.priceForOne = priceForOne;
     }
 

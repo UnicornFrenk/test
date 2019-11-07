@@ -20,22 +20,36 @@ public class ItemsServlet extends HttpServlet {
     private ItemService itemService = DefaultItemService.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        List<Item> items = itemService.getAll();
+        String pageNumber1 = request.getParameter("pageNumber");
+        if (pageNumber1 == null) {
+            pageNumber1 = "1";
+        }
+
+        Integer pageNumber = Integer.valueOf(pageNumber1);
+
+        List<Item> items = itemService.getPage(pageNumber);
         request.setAttribute("items", items);
-        WebUtils.forword("itemlist", request, response);
+
+        Long countOfPage = itemService.countOfPage();
+        request.setAttribute("pageCount", countOfPage);
+
+        WebUtils.forword("/itemlist", request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-
         String item_name = request.getParameter("item_name");
         itemService.readItem(item_name);
+        WebUtils.forword("/itemlist", request, response);
         try {
-            response.sendRedirect(request.getContextPath() + "/items");
+            response.sendRedirect(request.getContextPath() + "/itemlist");
         } catch (IOException e) {
             log.error("unknown error", e);
             throw new RuntimeException(e);
         }
+
+
     }
+
 
 }
 

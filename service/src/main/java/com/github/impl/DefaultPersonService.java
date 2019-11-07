@@ -44,14 +44,9 @@ public class DefaultPersonService implements PersonService {
     }
 
     @Override
-    public void deletePerson(String login) {
-        personDao.deletePerson(login);
+    public void deletePerson(Integer id) {
+        personDao.deletePerson(id);
 
-    }
-
-    @Override
-    public List<Person> getPersons() {
-        return personDao.getPersons();
     }
 
     @Override

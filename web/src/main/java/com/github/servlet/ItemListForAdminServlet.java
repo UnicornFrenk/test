@@ -13,27 +13,41 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+
 @WebServlet("/itemlistadmin")
-public class ItemListForSdminServlet extends HttpServlet {
-    private static final Logger log = LoggerFactory.getLogger(ItemsServlet.class);
+public class ItemListForAdminServlet extends HttpServlet {
+    private static final Logger log = LoggerFactory.getLogger(ItemListForAdminServlet.class);
     private ItemService itemService = DefaultItemService.getInstance();
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
-        List<Item> items = itemService.getAll();
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String pageNumber1 = request.getParameter("pageNumber");
+        if (pageNumber1 == null) {
+            pageNumber1 = "1";
+        }
+
+        Integer pageNumber = Integer.valueOf(pageNumber1);
+
+        List<Item> items = itemService.getPage(pageNumber);
         request.setAttribute("items", items);
-        WebUtils.forword("itemlistadmin", request, response);
+
+        Long countOfPage = itemService.countOfPage();
+        request.setAttribute("pageCount", countOfPage);
+
+        WebUtils.forword("/itemlistadmin", request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
-
         String item_name = request.getParameter("item_name");
         itemService.readItem(item_name);
+        WebUtils.forword("/itemlistadmin", request, response);
         try {
             response.sendRedirect(request.getContextPath() + "/itemlistadmin");
         } catch (IOException e) {
             log.error("unknown error", e);
             throw new RuntimeException(e);
         }
+
+
     }
 
 }

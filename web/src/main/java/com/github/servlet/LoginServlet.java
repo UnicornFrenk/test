@@ -1,7 +1,10 @@
 package com.github.servlet;
 
 
+import com.github.PersonService;
 import com.github.hib.dao.impl.DefaultPersonDao;
+import com.github.hib.entity.PersonEntity;
+import com.github.impl.DefaultPersonService;
 import com.github.model.Person;
 import com.github.SecurityService;
 import com.github.impl.DefaultSecurityService;
@@ -9,11 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,40 +32,23 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        Map<String, String> messages = new HashMap<>();
+            Person user = new Person(login, password);
+            DefaultPersonService.getInstance().getByLogin(user.getLogin());
 
-        if (login == null || login.isEmpty()) {
-            messages.put("login", "Please enter username");
-        }
 
-        if (password == null || password.isEmpty()) {
-            messages.put("password", "Please input password");
-        }
+            if (user!= null) {
+                request.getSession().setAttribute("user", user);
+                request.getSession().setAttribute("login", login);
+                request.getSession().setAttribute("password", password);
+                response.addCookie(new Cookie("myUserCookie", user.getLogin()));
+                WebUtils.forword("/authUser", request, response);
 
-        if (messages.isEmpty()) {
-            SecurityService instance = DefaultSecurityService.getInstance();
-            Person authUser = instance.userName(login, password);
-
-            if (authUser != null) {
-                request.getSession().setAttribute("authUser", authUser);
-                response.sendRedirect(request.getContextPath() + "/authUser");
-                DefaultPersonDao userDao = new DefaultPersonDao();
-                userDao.getByLogin(authUser.getLogin());
-
-                HttpSession session = request.getSession(false);
-                if (session == null || session.getAttribute("authUser") == null) {
+                if (request.getSession().getAttribute("user") != null) {
                     request.getRequestDispatcher("/authUser.jsp").forward(request, response);
                 } else {
                     request.getRequestDispatcher("/login.jsp").forward(request, response);
                 }
                 return;
-            } else {
-                log.warn("user {} couldn't log in with password {}", login, password);
-                messages.put("login", "Unknown login, please try again");
             }
-        }
 
-        request.setAttribute("message", messages);
-        //request.getRequestDispatcher("/login.jsp").forward(request, response);
-    }
-}
+}}

@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>authuser</title>
+    <title>authUser</title>
 </head>
 <body>
 <div>
@@ -18,7 +18,7 @@
         <c:when test="${login == 'ADMIN'}">
             <a href="${pageContext.request.contextPath}/itemlistadmin">items</a>
             <a href="${pageContext.request.contextPath}/users">users</a>
-            <a href="${pageContext.request.contextPath}/index.jsp">logout</a>
+            <a href="${pageContext.request.contextPath}/WEB-INF/index.jsp">logout</a>
 
             <br/>
         </c:when>

@@ -53,7 +53,7 @@ public class HQLTestPerson {
 
         @Test
         public void selectPerson() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             Query query = session.createQuery("select pd.userId, pd.city from PersonEntity as p left outer join PersonDetails as pd on p.id =pd.userId ");
             query.setTimeout(1000)
                     .setCacheable(true)
@@ -66,7 +66,7 @@ public class HQLTestPerson {
 
     @Test
     public void selectPersonWhere() {
-        Session session = EntityManagerUtil.getSession();
+        Session session = EntityManagerUtil.getEntityManager();
         Role role = USER;
 
         Query query = session.createQuery("from PersonEntity as p where p.role =:role");
@@ -78,7 +78,7 @@ public class HQLTestPerson {
 
         @Test
         public void selectAll() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
 
             List<PersonEntity> list = session.createQuery("from PersonEntity as p").list();
 
@@ -89,7 +89,7 @@ public class HQLTestPerson {
 
         @Test
         public void selectAllLogin() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
 
             Query query = session.createQuery("select p.login from PersonEntity as p");
             final List<String> list = query.list();
@@ -100,7 +100,7 @@ public class HQLTestPerson {
 
         @Test
         public void selectTestClauseObject() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
 
             Query query = session.createQuery("select p.login from PersonEntity as p");
             query.list().forEach(System.out::println);
@@ -110,7 +110,7 @@ public class HQLTestPerson {
 
         @Test
         public void selectTestClauseObjectWhere() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
 
             Query query = session.createQuery("select p.login from PersonEntity as p where p.login= 'ADMIN'");
             query.list().forEach(System.out::println);
@@ -120,7 +120,7 @@ public class HQLTestPerson {
 
         @Test
         public void orderByTest() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
 
             Query query = session.createQuery("from PersonEntity as p order by p.id desc");
             query.list().forEach(System.out::println);
@@ -130,7 +130,7 @@ public class HQLTestPerson {
 
         @Test
         public void parameterTest() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             String name = "user1";
 
             Query query = session.createQuery("from PersonEntity p where p.login = :name");
@@ -143,7 +143,7 @@ public class HQLTestPerson {
 
         @Test
         public void parameterOrderTest() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
 
             Query query = session.createQuery(
                     "from PersonEntity p where p.login= ?0 and p.id > :id");
@@ -156,7 +156,7 @@ public class HQLTestPerson {
 
         @Test
         public void parameterListTest() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             final List<Integer> values = Arrays.asList(1, 4);
 
             Query query = session.createQuery("from PersonEntity p where p.id in (:ids)");
@@ -168,7 +168,7 @@ public class HQLTestPerson {
 
         @Test
         public void like() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             String pattern = "use";
 
             Query query = session.createQuery("from PersonEntity p where p.login like :name order by p.login");
@@ -180,7 +180,7 @@ public class HQLTestPerson {
 
         @Test
         public void updateEPerson() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             session.beginTransaction();
 
             Integer exp = session.createQuery("update PersonEntity p set p.password = :pass where login = :name")
@@ -198,7 +198,7 @@ public class HQLTestPerson {
 
     @Test
     public void updateEPersonRole() {
-        Session session = EntityManagerUtil.getSession();
+        Session session = EntityManagerUtil.getEntityManager();
         session.beginTransaction();
         session.createQuery("update PersonEntity p set p.role = :role where login = :name")
                 .setParameter("name", "User3")
@@ -210,7 +210,7 @@ public class HQLTestPerson {
         @Test
         public void deleteTest() {
             PersonEntity person = new PersonEntity(null, "Tuk","Tuk",Role.USER,null);
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             session.getTransaction().begin();
             session.persist(person);
             session.createQuery("delete from PersonEntity p where p.login = :login")
@@ -221,7 +221,7 @@ public class HQLTestPerson {
     @Test
     public void deleteAllUserTest() {
             PersonEntity person =new PersonEntity();
-        Session session = EntityManagerUtil.getSession();
+        Session session = EntityManagerUtil.getEntityManager();
         session.getTransaction().begin();
         session.persist(person);
         session.createQuery("delete from PersonEntity p where p.role = :role")
@@ -232,7 +232,7 @@ public class HQLTestPerson {
 
         @Test
         public void aggFun() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             Query query = session.createQuery("select max(p.id) from PersonEntity p");
             System.out.println(query.list());
         }
@@ -251,7 +251,7 @@ public class HQLTestPerson {
 
         @Test
         public void withJoinTest() {
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             List<ItemEntity> items = session.createQuery(
                     "select distinct p " +
                             "from PersonEntity p " +
@@ -277,7 +277,7 @@ public class HQLTestPerson {
 
         private List<PersonEntity> getPage(int page) {
             int pageSize = 2;
-            Session session = EntityManagerUtil.getSession();
+            Session session = EntityManagerUtil.getEntityManager();
             Query query = session.createQuery("from PersonEntity p");
             return query.setMaxResults(pageSize)
                     .setFirstResult(page * pageSize)

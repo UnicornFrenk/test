@@ -14,7 +14,7 @@ public interface PersonDao {
     Person getByRole(Role role);
 
     void updatePerson(String login, String pass);
-    void deletePerson(String login);
+    void deletePerson(Integer id);
     List<Person> getPersons();
     List<Person> getAll();
 }

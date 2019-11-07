@@ -12,7 +12,7 @@
 </head>
 <body>
 <h2>Creating new item</h2>
-<c: set var="item"/>
+<c:set var="item"/>
 <form method="post" action="${pageContext.request.contextPath}/createitem">
     <table border="2">
         <tr>
@@ -25,14 +25,14 @@
 
         </tr>
         <tr>
-            <td><input type="text" name="item_name" value="${item.itemName}"></td>
-            <td><input type="text" name="item_description" value="${item.itemDescription}"></td>
-            <td><input type="text" name="item_quantity" value="${item.itemQuantity}"></td>
-            <td><input type="text" name="price_for_one" value="${item.priceForOne}"></td>
-
+            <td><input type="text" name="name" value="${item.itemName}"></td>
+            <td><input type="text" name="description" value="${item.itemDescription}"></td>
+            <td><input type="text" name="quantity" value="${item.itemQuantity}"></td>
+            <td><input type="text" name="price" value="${item.priceForOne}"></td>
         </tr>
     </table>
-    <button type="submit" name="create">create</button>
+
+    <button type="submit" name="create">create</button></form>
 </form>
 </body>
 </html>

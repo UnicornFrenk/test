@@ -4,6 +4,7 @@ package com.github.impl;
 import com.github.hib.dao.PersonDao;
 import com.github.hib.entity.Role;
 import com.github.model.Person;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -109,13 +110,10 @@ public class DefaultUserServiceTest {
 
     @Test
     public void deleteUserTest() {
-        when(dao.getByLogin("us")).thenReturn(null);
+        doNothing().when(dao).deletePerson(anyInt());
+        personService.deletePerson(1);
+        verify(dao).deletePerson(1);
 
-        dao.deletePerson("us");
-
-        Person id = dao.getByLogin("us");
-
-        assertNull(id);
     }
 
     @Test

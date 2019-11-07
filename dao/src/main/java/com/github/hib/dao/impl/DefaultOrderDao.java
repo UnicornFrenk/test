@@ -4,7 +4,7 @@ import com.github.hib.dao.OrderDao;
 import com.github.hib.dao.converters.BookingConverter;
 import com.github.hib.entity.Address;
 import com.github.hib.entity.BookingEntity;
-import com.github.hib.util.HibernateUtil;
+import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Order;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -30,8 +30,8 @@ public class DefaultOrderDao implements OrderDao {
 
     @Override
     public Integer createOrder(Order order) {
-        BookingEntity oEntity = BookingConverter.toEntity(order);
-        final Session session = HibernateUtil.getSession();
+        BookingEntity oEntity = new BookingEntity(order.getId(),order.getItem_id(), order.getUser_Id(),order.getDeliveryAddress());
+        final Session session = EntityManagerUtil.getEntityManager();
         session.beginTransaction();
         session.save(oEntity);
         session.getTransaction().commit();
@@ -42,8 +42,8 @@ public class DefaultOrderDao implements OrderDao {
     public Order readOrder(int id) {
         BookingEntity oEntity;
         try {
-            oEntity = (BookingEntity) HibernateUtil
-                    .getSession()
+            oEntity = (BookingEntity) EntityManagerUtil
+                    .getEntityManager()
                     .createQuery("from BookingEntity o where o.id = :id")
                     .setParameter("id", id)
                     .getSingleResult();
@@ -58,8 +58,8 @@ public class DefaultOrderDao implements OrderDao {
     public Order getOrderByPersonLogin(String login) {
         BookingEntity oEntity;
         try {
-            oEntity = (BookingEntity) HibernateUtil
-                    .getSession()
+            oEntity = (BookingEntity) EntityManagerUtil
+                    .getEntityManager()
                     .createQuery("from BookingEntity o join PersonEntity p on p.id=o.user_Id where p.login = :login")
                     .setParameter("login", login)
                     .getSingleResult();
@@ -73,8 +73,8 @@ public class DefaultOrderDao implements OrderDao {
     @Override
     public void updateOrder(int id, Address address) {
         try {
-         HibernateUtil
-                    .getSession()
+         EntityManagerUtil
+                    .getEntityManager()
                     .createQuery("update BookingEntity o set o.deliveryAddress = :address where o.user_Id = :id")
                     .setParameter("id", id)
                     .setParameter("address", address)
@@ -86,20 +86,18 @@ public class DefaultOrderDao implements OrderDao {
 
     @Override
     public void deleteOrder(int id) {
-        try {
-             HibernateUtil
-                    .getSession()
-                    .createQuery("delete from BookingEntity o where o.id = :id")
-                    .setParameter("id", id).executeUpdate();
-        } catch (NoResultException e) {
-            log.info("order not found by id{}", id);
-        }
+        Session session = EntityManagerUtil.getEntityManager().getSession();
+        session.beginTransaction();
+        Order orderForDelete =session.get(Order.class, id);
+        session.delete(orderForDelete);
+        session.getTransaction().commit();
+        session.close();
     }
 
     @Override
     public List<Order> getAll() {
-        final List<BookingEntity> orders = HibernateUtil
-                .getSession()
+        final List<BookingEntity> orders = EntityManagerUtil
+                .getEntityManager()
                 .createQuery("from BookingEntity ")
                 .list();
         return orders.stream()

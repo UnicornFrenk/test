@@ -40,12 +40,13 @@ public class DefaultCategoryServiceTest {
     }
 
     @Test
-    public void testCategoryNotExist() {
-        when(dao.readCategory("fruits")).thenReturn(null);
+    public void createCategoryTest() {
+        Category category = new Category(null, "sweets");
+        service.getInstance().createCategory(category);
+        String categoryFromDb = category.getNameCategory();
+        String exp = "sweets";
 
-        Category name = service.readCategory("fruits");
-
-        assertNull(name);
+        assertEquals(exp, categoryFromDb);
     }
 
     @Test
@@ -55,7 +56,7 @@ public class DefaultCategoryServiceTest {
 
         Category catFromDb = dao.readCategory("apple");
         String expName = "apple";
-        // assertNotNull(itemFromDb);
+
         assertEquals(expName, catFromDb.getNameCategory());
     }
 
@@ -66,20 +67,11 @@ public class DefaultCategoryServiceTest {
 
         verify(dao).updateCategory("apple", 1);}
 
-    @Test
-    public void createCategoryTest() {
-        Category category = new Category(null, "sweets");
-        service.getInstance().createCategory(category);
-        String categoryFromDb = category.getNameCategory();
-        String exp = "sweets";
-        assertEquals(exp, categoryFromDb);
-    }
 
     @Test
     public void deleteCategoryTest() {
 
         when(dao.readCategory("apple")).thenReturn(new Category());
-
         Integer id = service.readCategory("apple").getIdCategory();
 
         assertNull(id);
@@ -89,7 +81,18 @@ public class DefaultCategoryServiceTest {
     public void getAllCategoriesTest() {
         when(dao.getAll()).thenReturn(new ArrayList<Category>());
         List<Category> categories = service.getAll();
+        System.out.println(categories);
+
         assertNotNull(categories);
+    }
+
+    @Test
+    public void testCategoryNotExist() {
+        when(dao.readCategory("fruits")).thenReturn(null);
+
+        Category name = service.readCategory("fruits");
+
+        assertNull(name);
     }
 
 }

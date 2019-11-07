@@ -23,7 +23,7 @@ public class ItemConverter {
         if (itemEntity == null) {
             return null;
         }
-        return new Item(itemEntity.getName(), itemEntity.getDescription(),itemEntity.getQuantity(), itemEntity.getPrice());
+        return new Item(itemEntity.getId(), itemEntity.getName(), itemEntity.getDescription(),itemEntity.getQuantity(), itemEntity.getPrice());
 
     }
 }

@@ -1,6 +1,7 @@
 package com.github.impl;
 
 import com.github.hib.dao.ItemDao;
+import com.github.hib.dao.converters.ItemConverter;
 import com.github.hib.dao.impl.DefaultItemDao;
 import com.github.hib.entity.ItemEntity;
 import com.github.hib.util.EntityManagerUtil;
@@ -21,6 +22,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.longThat;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,45 +36,21 @@ public class DefaultItemServiceTest {
     @InjectMocks
     DefaultItemService service;
 
-
     @Test
     public void getInstance() {
         DefaultItemService.getInstance();
     }
 
     @Test
-    public void testItemNotExist() {
-
-        when(dao.readItem("nuts")).thenReturn(null);
-
-        Item item = dao.readItem("nuts");
-
-        assertNull(item);
-    }
-
-
-    @Test
-    public void testPriceCorrect() {    //todo
-
-        when(dao.readItem("apple")).thenReturn(new Item());
-
-        Item itemFromDb = dao.readItem("apple");
-        assertNotNull(itemFromDb);
-
-    }
-
-
-    @Test
     public void createItemTest() {
-        Item item = new Item("nuts", "nuts", 1000, 500);
+        Item item = new Item(3,"nuts", "nuts", 1000, 500);
         when(dao.createItem(item)).thenReturn(item);
 
         Item itemFromDb = service.createItem(item);
-
+        System.out.println(itemFromDb);
         assertNotNull(itemFromDb);
         assertEquals(item.getItemName(), itemFromDb.getItemName());
     }
-
 
     @Test
     public void readItemTest() {
@@ -85,9 +63,10 @@ public class DefaultItemServiceTest {
     }
 
     @Test
-    public void updateItemTest() {   //todo
+    public void updateItemTest() {
 
         doNothing().when(dao).updateItem(anyInt(), anyString());
+
         service.updateItem(1, "apple");
 
         verify(dao).updateItem(1, "apple");
@@ -96,18 +75,45 @@ public class DefaultItemServiceTest {
     @Test
     public void deleteItemTest() {
 
-        when(dao.readItem("nuts")).thenReturn(new Item());
-
-        dao.deleteItem("apple");
-
-        assertNull(dao.readItem("apple"));
+        doNothing().when(dao).deleteItem(anyInt());
+        service.deleteItem(1);
+        verify(dao).deleteItem(1);
     }
 
     @Test
     public void getAllItemsTest() {
-        when(dao.getAll()).thenReturn(new ArrayList<Item>());
+        when(dao.getAll()).thenReturn(new ArrayList<>());
+
         List<Item> items = service.getAll();
+        System.out.println(items.get(1));
+
         assertNotNull(items);
     }
 
+    @Test
+    public void testItemNotExist() {
+
+        when(dao.readItem("nuts")).thenReturn(null);
+
+        Item item = dao.readItem("nuts");
+
+        assertNull(item);
+    }
+
+    @Test
+    void getPage() {
+        List<Item> forTest = new ArrayList<>();
+        Item testItem = new Item("pomme", "pomme",3,200);
+        Item testItem1 = new Item("pomme1", "pomme",3,200);
+        Item testItem2= new Item("pomme2", "pomme",3,200);
+        Item testItem3 = new Item("pomme1", "pomme",3,200);
+        Item testItem4= new Item("pomme2", "pomme",3,200);
+        forTest.add(testItem);
+        forTest.add(testItem1);
+        forTest.add(testItem2);
+        forTest.add(testItem3);
+        forTest.add(testItem4);
+        when(dao.getPage(1)).thenReturn(forTest);
+        List<Item> items = service.getAll();
+    }
 }

@@ -1,5 +1,6 @@
 package com.github.servlet;
 import com.github.PersonService;
+import com.github.hib.entity.PersonEntity;
 import com.github.impl.DefaultPersonService;
 import com.github.model.Person;
 import org.slf4j.Logger;

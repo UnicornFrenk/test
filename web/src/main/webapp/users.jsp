@@ -17,7 +17,7 @@
             <td>${user.role}</td>
             <td>
                 <form method="post" action="${pageContext.request.contextPath}/deleteUser">
-                    <button type="submit" name="deleteUser" value="${user.login}">Delete User</button>
+                    <button type="submit" name="deleteUser" value="${user.id}">Delete User</button>
                 </form>
             </td>
         </tr>

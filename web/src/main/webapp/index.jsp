@@ -24,7 +24,7 @@
             </td>
             <td>
                 <form align="right" method="get" action="${pageContext.request.contextPath}/createOrder">
-                    <button type="submit" style="text-align:right" value="crete order">Create order</button>
+                    <button><a href="${pageContext.request.contextPath}/createOrder">create new order</a></button>
                 </form>
             </td>
         </tr>
@@ -33,7 +33,6 @@
     <br>
     <br>
 
-    <%--<%@include file="itemlist.jsp"%>--%>
     <a href="${pageContext.request.contextPath}/itemlist">items</a>
     <a href="${pageContext.request.contextPath}/users">users</a>
 

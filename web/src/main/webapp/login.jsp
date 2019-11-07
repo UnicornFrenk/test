@@ -6,17 +6,17 @@
     <title>login</title>
 </head>
 <body>
-<c:forEach var="authUser" items="authUsers"/>
+<%@include file="languages.jsp"%>
+<c:forEach var="user" items="user"/>
 <div class="form">
     <h1>Вход в систему</h1><br>
 
-    <form method="post" action="${pageContext.request.contextPath}/authUser">
-        <input type="text" name="login" value="${authUsers.login}"><br>
-        <input type="password" name="password" value="${authUsers.password}"><br>
+    <form method="post" action="${pageContext.request.contextPath}/login">
+        <input type="text" name="login" value="${user.login}"><br>
+        <input type="password" name="password" value="${user.password}"><br>
         <button type="submit" value="Submit">Submit</button>
 
     </form>
-    <c:out value="${authUsers.message}"/>
 </div>
 </body>
 </html>

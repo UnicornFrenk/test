@@ -2,7 +2,6 @@ package com.github.servlet;
 
 import com.github.impl.DefaultItemService;
 import com.github.model.Item;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,22 +23,27 @@ public class CreateItemServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest rq, HttpServletResponse rs) throws ServletException, IOException {
-        String name = rq.getParameter("item_name");
-        rq.setAttribute("item_name", name);
-        String description = rq.getParameter("item_description");
-        rq.setAttribute("item_description", description);
-        Integer quantity = Integer.valueOf(rq.getParameter("item_quantity"));
-        rq.setAttribute("item_quantity", quantity);
-        Integer price = Integer.valueOf(rq.getParameter("price_for_one"));
-        rq.setAttribute("price_for_one", price);
+      //  Integer id = Integer.valueOf(rq.getParameter("id"));
+        String name = rq.getParameter("name");
+        String description = rq.getParameter("description");
+        Integer quantity = Integer.valueOf(rq.getParameter("quantity"));
+        Integer price = Integer.valueOf(rq.getParameter("price"));
 
-        DefaultItemService.getInstance().createItem(new Item());
+        Item item = DefaultItemService.getInstance().createItem(new Item( name, description, quantity, price));
 
-        try {
-            rs.sendRedirect(rq.getContextPath() + "/itemlistadmin");
-        } catch (IOException e) {
-            log.error("unknown error", e);
-            throw new RuntimeException(e);
+        if (item != null) {
+            rq.getSession().setAttribute("item", item);
+            rq.getSession().setAttribute("id",item.getId());
+            rq.getSession().setAttribute("name", name);
+            rq.getSession().setAttribute("description", description);
+            rq.getSession().setAttribute("quantity", quantity);
+            rq.getSession().setAttribute("price", price);
+
+            try {
+                rs.sendRedirect(rq.getContextPath() + "/itemlistadmin");
+            } catch (IOException e) {
+                log.error("unknown error", e);
+                throw new RuntimeException(e);
+            }
         }
-    }
-}
+    }}

@@ -2,10 +2,10 @@ package com.github.hib.dao.impl;
 
 import com.github.hib.dao.converters.PersonConverter;
 import com.github.hib.dao.PersonDao;
+import com.github.hib.entity.BookingEntity;
 import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.Role;
 import com.github.hib.util.EntityManagerUtil;
-import com.github.hib.util.HibernateUtil;
 import com.github.model.Person;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -15,6 +15,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,11 +31,10 @@ public class DefaultPersonDao implements PersonDao {
         return DefaultPersonDao.SingletonHolder.HOLDER_INSTANCE;
     }
 
-
     @Override
     public int createPerson(Person person) {
-        PersonEntity pEntity = PersonConverter.toEntity(person);
-        final Session session = HibernateUtil.getSession();
+        PersonEntity pEntity = new PersonEntity(person.getId(), person.getLogin(),person.getPassword(), person.getRole(),null);
+        final Session session = EntityManagerUtil.getEntityManager();
         session.beginTransaction();
         session.save(pEntity);
         session.getTransaction().commit();
@@ -46,7 +46,10 @@ public class DefaultPersonDao implements PersonDao {
 
         PersonEntity personEntity;
         try {
-            personEntity = (PersonEntity) HibernateUtil.getSession().createQuery("from PersonEntity p where p.login = :login").setParameter("login", login).getSingleResult();
+            personEntity = (PersonEntity) EntityManagerUtil.getEntityManager()
+                    .createQuery("from PersonEntity p where p.login = :login")
+                    .setParameter("login", login)
+                    .getSingleResult();
         } catch (NoResultException e) {
             log.info("user not found by login{}", login);
             personEntity = null;
@@ -58,7 +61,7 @@ public class DefaultPersonDao implements PersonDao {
     public Person getByRole(Role role) {
         PersonEntity personEntity;
         try {
-            personEntity = (PersonEntity) HibernateUtil.getSession().createQuery("from PersonEntity p where p.role = :role").setParameter("role", role).getSingleResult();
+            personEntity = (PersonEntity) EntityManagerUtil.getEntityManager().createQuery("from PersonEntity p where p.role = :role").setParameter("role", role).getSingleResult();
         } catch (NoResultException e) {
             log.info("user not found by login{}", role);
             personEntity = null;
@@ -70,8 +73,8 @@ public class DefaultPersonDao implements PersonDao {
     public void updatePerson(String login, String pass) {
         pass = "www";
         try {
-            HibernateUtil
-                    .getSession()
+            EntityManagerUtil
+                    .getEntityManager()
                     .createQuery("update PersonEntity p set p.password = :pass where p.login = :login")
                     .setParameter("login", login)
                     .setParameter("pass",pass)
@@ -82,24 +85,34 @@ public class DefaultPersonDao implements PersonDao {
     }
 
     @Override
-    public void deletePerson(String login) {
-        PersonEntity personEntity;
-        try {
-            personEntity = (PersonEntity) HibernateUtil
-                    .getSession()
-                    .createQuery("delete from PersonEntity p where p.login = :login")
-                    .setParameter("login", login)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            log.info("user not found by login{}", login);
-            personEntity = null;
-        }
+   @Transactional
+    public void deletePerson(Integer id) {
+
+//        try {
+//            EntityManagerUtil
+//                    .getEntityManager()
+//                    .createQuery("delete from PersonEntity p where p.login = :login")
+//                    .setParameter("login", login)
+//                    .getSingleResult();
+//        } catch (NoResultException e) {
+//            log.info("user not found by login{}", login);
+//        }
+
+        PersonEntity person;
+        Session session = EntityManagerUtil.getEntityManager();
+        session.beginTransaction();
+        person = session.get(PersonEntity.class, id);
+        session.delete(person);
+        session.getTransaction().commit();
+        session.close();
+
+
     }
 
     @Override
     public List<Person> getAll() {
-        final List<PersonEntity> personList = HibernateUtil
-                .getSession()
+        final List<PersonEntity> personList = EntityManagerUtil
+                .getEntityManager()
                 .createQuery("from PersonEntity ")
                 .list();
         return personList

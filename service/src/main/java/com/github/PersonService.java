@@ -12,7 +12,6 @@ public interface PersonService {
     Person getByRole(Role role);
 
     void updatePerson(String login, String pass);
-    void deletePerson(String login);
-     List<Person> getPersons();
+    void deletePerson(Integer id);
     List<Person> getAll();
 }

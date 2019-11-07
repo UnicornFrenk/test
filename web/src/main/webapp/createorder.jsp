@@ -13,14 +13,16 @@
     <title>Create order </title>
 </head>
 <body>
+<form method="post" action="${pageContext.request.contextPath}/createOrder">
 
 <table border="2">
     <tr>
-        <td>id</td>
+        <td>Id</td>
         <td>Name</td>
         <td>Description</td>
         <td>Total Quantity</td>
         <td>Price For One</td>
+        <td>i want it</td>
 
     </tr>
     <c:forEach items="${items}" var="item">
@@ -30,9 +32,10 @@
             <td>${item.itemDescription}</td>
             <td>${item.itemQuantity}</td>
             <td>${item.priceForOne}</td>
+            <td></td>
         </tr>
     </c:forEach>
 </table>
-
+</form>
 </body>
 </html>

@@ -3,7 +3,7 @@ package com.github.hib.dao;
 import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.PersonDetails;
 import com.github.hib.util.EntityManagerUtil;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
@@ -23,7 +23,7 @@ public class OneToOneTest {
         em.clear();
 
         PersonEntity personFromDb = em.find(PersonEntity.class,person.getId());
-        Assert.assertEquals(person.getLogin(), personFromDb.getLogin());
+        Assertions.assertEquals(person.getLogin(), personFromDb.getLogin());
 
 
     }
@@ -48,6 +48,6 @@ public class OneToOneTest {
         em.merge(personFromDb);
         em.getTransaction().commit();
 
-        Assert.assertEquals(person.getLogin(), personFromDb.getLogin());
+        Assertions.assertEquals(person.getLogin(), personFromDb.getLogin());
     }
 }

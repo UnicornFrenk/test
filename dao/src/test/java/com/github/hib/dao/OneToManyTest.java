@@ -2,9 +2,7 @@ package com.github.hib.dao;
 
 import com.github.hib.entity.*;
 import com.github.hib.util.EntityManagerUtil;
-import com.github.hib.util.HibernateUtil;
-import org.hibernate.Session;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
@@ -21,7 +19,7 @@ public class OneToManyTest {
         em.persist(category);
         em.flush();
         em.getTransaction().commit();
-        Assert.assertNotNull(category.getItems());
+        Assertions.assertNotNull(category.getItems());
     }
 
     @Test
@@ -45,8 +43,8 @@ public class OneToManyTest {
         System.out.println(category);
         em.getTransaction().commit();
 
-        Assert.assertNotNull(category);
-        Assert.assertNotNull(category.getItems());
+        Assertions.assertNotNull(category);
+        Assertions.assertNotNull(category.getItems());
     }
 
     @Test
@@ -68,7 +66,7 @@ public class OneToManyTest {
         em.merge(category.getItems().get(1));
         System.out.println(category.getItems());
 
-        Assert.assertNotNull(category);
+        Assertions.assertNotNull(category);
         //todo
 
     }

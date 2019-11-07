@@ -45,6 +45,7 @@ public class DefaultOrderService implements OrderService {
 
     @Override
     public void deleteOrder(int id) {
+        orderDao.deleteOrder(id);
 
     }
 

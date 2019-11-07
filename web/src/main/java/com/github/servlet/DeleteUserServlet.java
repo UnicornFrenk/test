@@ -6,6 +6,7 @@ import com.github.model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,14 +22,14 @@ public class DeleteUserServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) {
 
         List<Person> users = personService.getAll();
-        request.setAttribute("items", users);
+        request.setAttribute("users", users);
         WebUtils.forword("users", request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
 
-        String name = request.getParameter("deleteUser");
-        personService.deletePerson(name);
+        Integer id = Integer.parseInt(request.getParameter("deleteUser"));
+        personService.deletePerson(id);
         try {
             response.sendRedirect(request.getContextPath() + "/users");
         } catch (IOException e) {

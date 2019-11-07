@@ -3,8 +3,7 @@ package com.github.hib.dao;
 import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.Role;
 import com.github.hib.util.EntityManagerUtil;
-import org.junit.AfterClass;
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import javax.persistence.EntityManager;
@@ -24,7 +23,7 @@ public class PersonEMTest {
 
         em.getTransaction().begin();
         PersonEntity personFromDb = em.find(PersonEntity.class, person.getId());
-        Assert.assertEquals(person, personFromDb);
+        Assertions.assertEquals(person, personFromDb);
         em.getTransaction().commit();
     }
 
@@ -109,8 +108,4 @@ public class PersonEMTest {
         entityManager.close();
     }
 
-    @AfterClass
-    public void cleanUp() {
-        EntityManagerUtil.closeEMFactory();
-    }
 }

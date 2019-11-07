@@ -42,6 +42,7 @@ public class DefaultCategoryService implements CategoryService {
 
     @Override
     public void deleteCategory(String name) {
+        categoryDao.deleteCategory(name);
     }
 
     @Override

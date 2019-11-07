@@ -3,7 +3,7 @@ package com.github.criteria;
 import com.github.hib.entity.PersonDetails;
 import com.github.hib.entity.PersonEntity;
 import com.github.hib.entity.Role;
-import com.github.hib.util.HibernateUtil;
+import com.github.hib.util.EntityManagerUtil;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ public class PersonTest {
 
         @BeforeAll
         static public void init() {
-            EntityManager em = HibernateUtil.getEntityManager();
+            EntityManager em = EntityManagerUtil.getEntityManager();
             em.getTransaction().begin();
             PersonDetails personDetails = new PersonDetails(null,null,null,null,null, null);
             PersonEntity person = new PersonEntity(null, "user1", "user1", Role.USER, personDetails);
@@ -52,7 +52,7 @@ public class PersonTest {
 
         @Test
         public void getAllPersons() {
-            EntityManager em = HibernateUtil.getEntityManager();
+            EntityManager em = EntityManagerUtil.getEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<PersonEntity> criteria = cb.createQuery(PersonEntity.class);
             criteria.select(criteria.from(PersonEntity.class));
@@ -64,7 +64,7 @@ public class PersonTest {
 
         @Test
         public void getPersonByLoginTest() {
-            EntityManager em = HibernateUtil.getEntityManager();
+            EntityManager em = EntityManagerUtil.getEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<PersonEntity> criteria = cb.createQuery(PersonEntity.class);
             Root<PersonEntity> personRoot = criteria.from(PersonEntity.class);
@@ -78,7 +78,7 @@ public class PersonTest {
 
     @Test
     public void getPersonByRoleTest() {
-        EntityManager em = HibernateUtil.getEntityManager();
+        EntityManager em = EntityManagerUtil.getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<PersonEntity> criteria = cb.createQuery(PersonEntity.class);
         Root<PersonEntity> personRoot = criteria.from(PersonEntity.class);
@@ -92,7 +92,7 @@ public class PersonTest {
 
         @Test
         public void likeTest() {
-            EntityManager em = HibernateUtil.getEntityManager();
+            EntityManager em = EntityManagerUtil.getEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<PersonEntity> criteria = cb.createQuery(PersonEntity.class);
             Root<PersonEntity> emp = criteria.from(PersonEntity.class);
@@ -106,7 +106,7 @@ public class PersonTest {
 
         @Test
         public void isNullTest() {
-            EntityManager em = HibernateUtil.getEntityManager();
+            EntityManager em = EntityManagerUtil.getEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<PersonEntity> criteria = cb.createQuery(PersonEntity.class);
             Root<PersonEntity> personRoot = criteria.from(PersonEntity.class);
@@ -120,7 +120,7 @@ public class PersonTest {
 
         @Test
         public void pagingTest() {
-            EntityManager em = HibernateUtil.getEntityManager();
+            EntityManager em = EntityManagerUtil.getEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<PersonEntity> personCriteriaQuery = cb.createQuery(PersonEntity.class);
             personCriteriaQuery.select(personCriteriaQuery.from(PersonEntity.class));
@@ -135,7 +135,7 @@ public class PersonTest {
 
         @Test
         public void countTest() {
-            EntityManager em = HibernateUtil.getEntityManager();
+            EntityManager em = EntityManagerUtil.getEntityManager();
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Long> criteria = cb.createQuery(Long.class);
             criteria.select(cb.count(criteria.from(PersonEntity.class)));

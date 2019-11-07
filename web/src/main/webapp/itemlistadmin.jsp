@@ -29,21 +29,26 @@ Items list
     <c:forEach items="${items}" var="item">
         <tr>
             <td>${item.id}</td>
-            <td>${item.itemName}</td>
-            <td>${item.itemDescription}</td>
-            <td>${item.itemQuantity}</td>
-            <td>${item.priceForOne}</td>
+            <td>${item.name}</td>
+            <td>${item.description}</td>
+            <td>${item.quantity}</td>
+            <td>${item.price}</td>
+            <td><a href="${pageContext.request.contextPath}/updateitem?id=${item.id}">update item</a></td>
             <td>
-                <form method="post"  action="${pageContext.request.contextPath}/deleteitem">
-                    <button type="submit" name="del" value="${item.itemName}">Delete</button>
+                <form method="post" action="${pageContext.request.contextPath}/deleteitem">
+                    <input hidden="true" type="number" name="del" value="${item.id}">
+                    <input type="submit" value="Delete">
                 </form>
             </td>
         </tr>
     </c:forEach>
 </table>
 
+<c:forEach begin="1" end="${pageCount}" var="pageNumber">
+    <a href="${pageContext.request.contextPath}/itemlistadmin?pageNumber=${pageNumber}">${pageNumber}</a>
+</c:forEach>
 
-<button><a href="${pageContext.request.contextPath}/createitem.jsp">create new item</a></button>
+<button><a href="${pageContext.request.contextPath}/createitem">create new item</a></button>
 <br/>
 </body>
 </html>

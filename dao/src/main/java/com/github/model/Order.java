@@ -20,6 +20,13 @@ public class Order {
         this.totalPrice = totalPrice;
         this.deliveryAddress = deliveryAddress;
     }
+    public Order(Integer user_Id, Integer item_id, Integer totalPrice, Address deliveryAddress) {
+        this.user_Id = user_Id;
+        this.item_id = item_id;
+        this.totalPrice = totalPrice;
+        this.deliveryAddress = deliveryAddress;
+    }
+
 
     public Integer getId() {
         return id;
