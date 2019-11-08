@@ -2,9 +2,12 @@ package com.github.hib.dao.impl;
 
 import com.github.hib.dao.ItemDao;
 import com.github.hib.dao.converters.ItemConverter;
+import com.github.hib.entity.CategoryEntity;
 import com.github.hib.entity.ItemEntity;
 import com.github.hib.util.EntityManagerUtil;
+import com.github.model.Category;
 import com.github.model.Item;
+import org.hibernate.Cache;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
@@ -29,17 +32,18 @@ public class DefaultItemDao implements ItemDao {
         return DefaultItemDao.SingletonHolder.HOLDER_INSTANCE;
     }
 
-    private static final String createItem = "insert into item (name, description, quantity,price) values (?,?,?,?)";
 
     @Override
     public Item createItem(Item item1) {
         Session session = EntityManagerUtil.getEntityManager();
         ItemEntity item = new ItemEntity();
+       // CategoryEntity category = new CategoryEntity();
         item.setId(item1.getId());
         item.setName(item1.getItemName());
         item.setDescription(item1.getItemDescription());
         item.setQuantity(item1.getItemQuantity());
         item.setPrice(item1.getPriceForOne());
+        //item.setCategory(category);
         session.beginTransaction();
         session.save(item);
         session.getTransaction().commit();
@@ -139,7 +143,6 @@ public class DefaultItemDao implements ItemDao {
     public List<Item> getAll() {
         final List<ItemEntity> itemEntities = EntityManagerUtil.getEntityManager().createQuery("from ItemEntity ").list();
         return itemEntities.stream().map(ItemConverter::fromEntity).collect(Collectors.toList());
-
 
     }
 

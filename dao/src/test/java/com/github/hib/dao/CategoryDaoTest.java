@@ -7,6 +7,7 @@ import com.github.model.Category;
 import org.hibernate.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 public class CategoryDaoTest {
@@ -24,14 +25,6 @@ public class CategoryDaoTest {
     }
 
     @Test
-    public void createTest() {
-        Category testCategory = DefaultCategoryDao.getInstance().createCategory(new Category(null, "look"));
-        System.out.println(testCategory);
-
-        Assertions.assertNotNull(testCategory);
-    }
-
-    @Test
     public void read() {
         final CategoryEntity category = saveCategory();
         DefaultCategoryDao.getInstance().readCategory(category.getNameCategory());
@@ -42,18 +35,28 @@ public class CategoryDaoTest {
 
     @Test
     public void updateCategory() {
-        final CategoryEntity category = saveCategory();
-        DefaultCategoryDao.getInstance().updateCategory("kiwi", category.getIdCategory());
+        CategoryEntity category = saveCategory();
 
-        Assertions.assertEquals(category.getNameCategory(), "kiwi");
+        DefaultCategoryDao.getInstance().updateCategory("tasty", category.getIdCategory());
+
+        Category categoryFromDb = DefaultCategoryDao.getInstance().readCategory(category.getNameCategory());
+        System.out.println(categoryFromDb);
+        Assertions.assertEquals("tasty", categoryFromDb.getNameCategory());
     }
 
+    //    @Test //todo
+//    public void deleteSession() {
+//        final CategoryEntity category = saveCategory();
+//        DefaultCategoryDao.getInstance().deleteCategory(category.getIdCategory());
+//        CategoryEntity categoryEntity =EntityManagerUtil.getEntityManager().find(CategoryEntity.class, category.getIdCategory());
+//        Assertions.assertNull(categoryEntity);
+//    }
     @Test
-    public void deleteSession() {
-        CategoryEntity category = saveCategory();
-        DefaultCategoryDao.getInstance().deleteCategory(category.getNameCategory());
+    public void createTest() {
+        Category testCategory = DefaultCategoryDao.getInstance().createCategory(new Category(null, "look"));
+        System.out.println(testCategory);
 
-        Assertions.assertNull(category);
+        Assertions.assertNotNull(testCategory);
     }
 
     @Test

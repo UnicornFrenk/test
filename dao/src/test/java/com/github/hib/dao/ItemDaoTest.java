@@ -48,11 +48,9 @@ public class ItemDaoTest {
     @Test
     public void updateItem() {
         ItemEntity testItem = saveItem();
-        System.out.println(testItem);
 
         DefaultItemDao.getInstance().updateItem(200, testItem.getName());
 
-        System.out.println(testItem);
         Item item = DefaultItemDao.getInstance().readItem(testItem.getName());
         Assertions.assertEquals((Integer) 200, item.getPriceForOne());
     }

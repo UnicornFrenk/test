@@ -86,12 +86,18 @@ public class DefaultOrderDao implements OrderDao {
 
     @Override
     public void deleteOrder(int id) {
+        try{
         Session session = EntityManagerUtil.getEntityManager().getSession();
         session.beginTransaction();
-        Order orderForDelete =session.get(Order.class, id);
-        session.delete(orderForDelete);
+        session.createQuery("delete from BookingEntity b where b.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
         session.getTransaction().commit();
         session.close();
+    }
+        catch (NoResultException e) {
+            log.info("order not found by id{}", id);
+        }
     }
 
     @Override

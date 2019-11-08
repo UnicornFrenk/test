@@ -73,12 +73,13 @@ public class DefaultPersonDao implements PersonDao {
     public void updatePerson(String login, String pass) {
         pass = "www";
         try {
-            EntityManagerUtil
-                    .getEntityManager()
-                    .createQuery("update PersonEntity p set p.password = :pass where p.login = :login")
+            Session session = EntityManagerUtil.getEntityManager().getSession();
+            session.beginTransaction();
+            session.createQuery("update PersonEntity p set p.password = :pass where p.login = :login")
                     .setParameter("login", login)
                     .setParameter("pass",pass)
                     .executeUpdate();
+            session.getTransaction().commit();
         } catch (NoResultException e) {
             log.info("user not found by login{}", login);
         }
@@ -88,24 +89,16 @@ public class DefaultPersonDao implements PersonDao {
    @Transactional
     public void deletePerson(Integer id) {
 
-//        try {
-//            EntityManagerUtil
-//                    .getEntityManager()
-//                    .createQuery("delete from PersonEntity p where p.login = :login")
-//                    .setParameter("login", login)
-//                    .getSingleResult();
-//        } catch (NoResultException e) {
-//            log.info("user not found by login{}", login);
-//        }
-
-        PersonEntity person;
-        Session session = EntityManagerUtil.getEntityManager();
-        session.beginTransaction();
-        person = session.get(PersonEntity.class, id);
-        session.delete(person);
-        session.getTransaction().commit();
-        session.close();
-
+        try {
+            Session session =EntityManagerUtil.getEntityManager().getSession();
+            session.beginTransaction();
+            session.createQuery("delete from PersonEntity p where p.id = :id")
+                    .setParameter("id", id)
+                    .executeUpdate();
+            session.getTransaction().commit();
+        } catch (NoResultException e) {
+            log.info("user not found by id{}", id);
+        }
 
     }
 

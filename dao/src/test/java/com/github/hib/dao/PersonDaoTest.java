@@ -10,6 +10,7 @@ import com.github.model.Person;
 import org.hibernate.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.omg.CORBA.PERSIST_STORE;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,16 +51,17 @@ public class PersonDaoTest {
         final PersonEntity person = savePerson();
         DefaultPersonDao.getInstance().updatePerson(person.getLogin(), "www");
         System.out.println(person);
-
-        Assertions.assertEquals(person.getPassword(), "www");
+        Person personFromDb = DefaultPersonDao.getInstance().getByLogin(person.getLogin());
+        System.out.println(personFromDb);
+        Assertions.assertEquals(personFromDb.getPassword(), "www");
     }
 
     @Test
     public void deleteSession() {
         final PersonEntity person = savePerson();
         DefaultPersonDao.getInstance().deletePerson(person.getId());
-
-        Assertions.assertNull(person);
+        PersonEntity personEntity =EntityManagerUtil.getEntityManager().find(PersonEntity.class, person.getId());
+        Assertions.assertNull(personEntity);
     }
 
     @Test

@@ -85,7 +85,6 @@ public class DefaultItemServiceTest {
         when(dao.getAll()).thenReturn(new ArrayList<>());
 
         List<Item> items = service.getAll();
-        System.out.println(items.get(1));
 
         assertNotNull(items);
     }

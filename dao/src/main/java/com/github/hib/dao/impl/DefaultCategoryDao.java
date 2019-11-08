@@ -4,6 +4,7 @@ import com.github.hib.dao.CategoryDao;
 import com.github.hib.dao.converters.CategoryConverter;
 import com.github.hib.dao.converters.PersonConverter;
 import com.github.hib.entity.CategoryEntity;
+import com.github.hib.entity.ItemEntity;
 import com.github.hib.entity.PersonEntity;
 import com.github.hib.util.EntityManagerUtil;
 import com.github.model.Category;
@@ -54,15 +55,14 @@ public class DefaultCategoryDao implements CategoryDao {
 
     @Override
     public void updateCategory(String name, int id) {
-        //hql
         try {
-            Session em = EntityManagerUtil.getEntityManager();
-            em.beginTransaction();
-            em.createQuery("update CategoryEntity c set c.nameCategory = :name where c.idCategory = :id")
-                    .setParameter("id", id)
+            Session session = EntityManagerUtil.getEntityManager().getSession();
+            session.beginTransaction();
+            session.createQuery("update CategoryEntity c set c.nameCategory = :name where c.id = :id")
                     .setParameter("name", name)
+                    .setParameter("id",id)
                     .executeUpdate();
-            em.getTransaction().commit();
+            session.getTransaction().commit();
         } catch (NoResultException e) {
             log.info("category not found by id{}", id);
         }

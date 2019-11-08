@@ -1,8 +1,6 @@
 package com.github.jdbc;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class JDBCConnection {
@@ -21,6 +19,7 @@ public class JDBCConnection {
         try {
             return DriverManager.getConnection(url, user, pass);
         } catch (SQLException e) {
+            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
